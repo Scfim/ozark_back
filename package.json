@@ -1,0 +1,46 @@
+{
+  "name": "application-name",
+  "version": "1.0.0",
+  "description": "application description",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devStart": "nodemon server.js",
+    "start": "node server.js",
+    "install:dependencies": "npm install mysql cors jsonwebtoken cookie-parser multer express express-session bcrypt dotenv colors",
+    "install:devDependencies": "npm install -D your <package-name-here>",
+    "install:global": "npm install --global nodemon yarn",
+    "add:dependencies": "yarn add mysql cors jsonwebtoken cookie-parser multer express express-session bcrypt dotenv colors",
+    "add:devDependencies": "yarn add -D <package-name-here>",
+    "add:global": "yarn global add nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Scfim/ozark_server.git"
+  },
+  "keywords": [
+    "application",
+    "key",
+    "words"
+  ],
+  "author": "scfim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/user/yourgitrepository/issues"
+  },
+  "homepage": "https://github.com/user/yourgitrepository#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "colors": "^1.4.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
+    "mysql": "^2.18.1",
+    "q": "^1.5.1"
+  }
+}

@@ -1,0 +1,154 @@
+export const usersSchema={
+    id:"user_id",
+    name:"user_first_name",
+    lastName:"user_last_name",
+    phone:"user_phone_numeber",
+    mail:"user_mail_adress",
+    type:"user_type",
+    passWord:"user_pass_word",
+    userImage:"user_image",
+    date:"system_date",
+    time:"system_time"
+}
+export const etablishementSchema={
+    name:"etablishement_name",
+    mail:"etablishement_mail",
+    phone:"etablishement_phone_number",
+    webSite:"etablishement_web_site",
+    logo:"etablishement_logo",
+    bp:"etablishement_bp",
+    adress:"etablishment_adress",
+    date:"system_date",
+    time:"system_time"
+}
+export const providersSchema={
+    id:"provider_id",
+    name:"provider_name",
+    adress:"provider_adress",
+    phone:"provider_phone_number",
+    mail:"provider_mail_adress",
+    date:"system_date",
+    time:"system_time"
+}
+export const clientsSchema={
+    id:"client_id",
+    name:"client_name",
+    adress:"client_adress",
+    phone:"client_phone_number",
+    mail:"client_mail_adress",
+    date:"system_date",
+    time:"system_time"   
+}
+export const exercisesSchema={
+    id:"exercise_id",
+    startDate:"exercise_start_date",
+    endDate:"exercise_end_date",
+    status:"exercise_status",
+    date:"system_date",
+    time:"system_time"
+}
+export const categoriesSchema={
+    id:"categorie_id",
+    name:"categorie_name",
+    type:"categorie_type",
+    date:"system_date",
+    time:"system_time"
+}
+export const productsSchema={
+    id:"product_id",
+    categorierId:"categorie_id",
+    name:"product_name",
+    marque:"product_marque",
+    dosage:"product_dosage",
+    forme:"product_forme",
+    format:"product_format",
+    alertStock:"product_alert_stock",
+    date:"system_date",
+    time:"system_time"
+}
+export const inputSchema={
+    id:"input_traffic_id",
+    productId:"product_id",
+    providerId:"provider_id",
+    quantity:"quantity",
+    unitePrice:"unite_price",
+    lot:"lot_number",
+    expireDate:"expire_date",
+    exerciseId:"exercise_id",
+    dateRecord:"date_record",
+    timeRecord:"time_record",
+    comment:"comment_traffic",
+    date:"system_date",
+    time:"system_time",    
+    userId:"user_id"
+}
+export const boookingsSchema={
+    id:"booking_id",
+    clientId:"client_id",
+    productId:"product_id",
+    quantity:"quantity",
+    unitePrice:"unite_price",
+    number:"booking_number",
+    description:"booking_description",
+    exerciseId:"exercise_id",
+    dateRecord:"date_record",
+    timeRecord:"time_record",
+    date:"system_date",
+    time:"system_time",    
+    userId:"user_id"
+}
+export const outputSchema={
+    id:"out_traffic_id",
+    bookingId:"booking_id",
+    productId:"product_id",
+    quantity:"quantity",
+    unitePricice:"unite_price",
+    exerciseId:"exercise_id",
+    exerciseId:"exercise_id",
+    dateRecord:"date_record",
+    timeRecord:"time_record",
+    date:"system_date",
+    time:"system_time",
+    perisable:"product_id_input_perisable",
+    envoy:"envoy",    
+    userId:"user_id"
+}
+export const payementsSchema={
+    id:"payement_id",
+    bookingId:"booking_id",
+    dateRecord:"date_record",
+    timeRecord:"time_record",
+    mount:"payement_mount",
+    envoy:"payement_envoy",
+    exerciseId:"exercise_id",
+    userId:"user_id",
+    date:"system_date",
+    time:"system_time",
+}
+export const databaseSchema={
+    users:"users",
+    etablishement:"etablishement",
+    provider:"provider",
+    clients:"clients",
+    exercises:"exercises",
+    categories:"categories",
+    products:"products",
+    input:"input_traffic",
+    bookings:"bookings",
+    output:"output_traffic",
+    payement:"payement"
+}
+export const Schema={
+    users:usersSchema,
+    etablishement:etablishementSchema,
+    provider:providersSchema,
+    clients:clientsSchema,
+    exercises:exercisesSchema,
+    categories:categoriesSchema,
+    products:productsSchema,
+    input:inputSchema,
+    bookings:boookingsSchema,
+    output:outputSchema,
+    payement:payementsSchema
+}
+export default Schema
