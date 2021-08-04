@@ -12,23 +12,12 @@
  */
 
 import express from "express"
-import session from "express-session"
 import cors from "cors"
-import cookieParser from "cookie-parser"
-import Myconnection from "./App/Config.js";
+import database from "./App/Config.js";
 import etabliRouter from "./Controllers/CEtablishement.js";
-
-
-
-// import App from "./App/Specials.js"
-
-// App.use("data").then((result)=>{
-  
-// })
-
-/**
- * 
- */
+import userRouter from "./Controllers/CUsers.js"
+import categoriesRouter from "./Controllers/CCategories.js"
+import marksRouter from "./Controllers/CMarks.js"
  const app = express();
 
 
@@ -38,7 +27,10 @@ import etabliRouter from "./Controllers/CEtablishement.js";
   credentials:true
 }));
 
- app.use(express.json());
-  app.use("/etablishement", etabliRouter);
- const PORT = process.env.PORT || 2723;
- app.listen(PORT, () => console.log(`Server start on port ${PORT}`));
+app.use(express.json());
+app.use("/etablishement", etabliRouter);
+app.use('/user',userRouter);
+app.use('/categories',categoriesRouter)
+app.use('/marks',marksRouter)
+const PORT = process.env.PORT || 2723;
+app.listen(PORT, () => console.log(`Server start on port ${PORT}`));

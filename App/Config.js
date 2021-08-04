@@ -1,9 +1,5 @@
 //importing middlewares
 import mysql from "mysql"
-import Q from "q"
-
-
-var Myconnection={}
 /**
  * @var {Props} database2 : Our database
  * @var {Props} user : Username Connection
@@ -16,24 +12,13 @@ const user = "root"
 const password = ""
 const host = "localhost"
 
-Myconnection.connect = function(){
-   var d = Q.defer();
-   Myconnection.connection = mysql.createConnection({
-       host,
-       user,                
-       password,           
-       database : database2
-   });
 
-   Myconnection.connection.connect(function (err) {
-       if(err) {
-          
-           d.reject();
-       } else {
-          
-           d.resolve(Myconnection.connection);
-       }
-   });
-   return d.promise;
-};
-export default Myconnection
+//connection to the database
+const database = mysql.createConnection({
+   database:database2,
+   user,
+   password,
+   host
+})
+
+export default database

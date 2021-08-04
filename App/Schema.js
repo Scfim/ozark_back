@@ -2,10 +2,10 @@ export const usersSchema={
     id:"user_id",
     name:"user_first_name",
     lastName:"user_last_name",
-    phone:"user_phone_numeber",
+    phone:"user_phone_number",
     mail:"user_mail_adress",
     type:"user_type",
-    passWord:"user_pass_word",
+    password:"user_pass_word",
     userImage:"user_image",
     date:"system_date",
     time:"system_time"
@@ -28,7 +28,8 @@ export const providersSchema={
     phone:"provider_phone_number",
     mail:"provider_mail_adress",
     date:"system_date",
-    time:"system_time"
+    time:"system_time",
+    userId:"user_id" 
 }
 export const clientsSchema={
     id:"client_id",
@@ -37,7 +38,8 @@ export const clientsSchema={
     phone:"client_phone_number",
     mail:"client_mail_adress",
     date:"system_date",
-    time:"system_time"   
+    time:"system_time",
+    userId:"user_id"   
 }
 export const exercisesSchema={
     id:"exercise_id",
@@ -45,14 +47,33 @@ export const exercisesSchema={
     endDate:"exercise_end_date",
     status:"exercise_status",
     date:"system_date",
-    time:"system_time"
+    time:"system_time",
+    userId:"user_id" 
 }
 export const categoriesSchema={
     id:"categorie_id",
     name:"categorie_name",
     type:"categorie_type",
     date:"system_date",
-    time:"system_time"
+    time:"system_time",
+    userId:"user_id" 
+}
+export const subCategoriesSchema = {
+    id:"sub_categorie_id",
+    categorieId:"categorie_id",
+    name:"sub_categorie_name",
+    type:"sub_categorie_type",
+    date:"system_date",
+    time:"system_time",
+    userId:"user_id"
+}
+export const marksSchema={
+    id:"mark_id",
+    name:"mark_name",
+    description:"mark_description",
+    date:"system_date",
+    time:"system_time",
+    userId:"user_id" 
 }
 export const productsSchema={
     id:"product_id",
@@ -64,7 +85,8 @@ export const productsSchema={
     format:"product_format",
     alertStock:"product_alert_stock",
     date:"system_date",
-    time:"system_time"
+    time:"system_time",
+    userId:"user_id" 
 }
 export const inputSchema={
     id:"input_traffic_id",
@@ -136,19 +158,24 @@ export const databaseSchema={
     input:"input_traffic",
     bookings:"bookings",
     output:"output_traffic",
-    payement:"payement"
+    payement:"payement",
+    marks:"marks",
+    sub_categories:"sub_categories",
 }
 export const Schema={
-    users:usersSchema,
-    etablishement:etablishementSchema,
-    provider:providersSchema,
-    clients:clientsSchema,
-    exercises:exercisesSchema,
-    categories:categoriesSchema,
-    products:productsSchema,
-    input:inputSchema,
-    bookings:boookingsSchema,
-    output:outputSchema,
-    payement:payementsSchema
+    usersSchema,
+    etablishementSchema,
+    providersSchema,
+    clientsSchema,
+    exercisesSchema,
+    categoriesSchema,
+    productsSchema,
+    inputSchema,
+    boookingsSchema,
+    outputSchema,
+    payementsSchema,
+    marksSchema,
+    subCategoriesSchema,
+    databaseSchema
 }
 export default Schema
