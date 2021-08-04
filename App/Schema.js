@@ -77,7 +77,7 @@ export const marksSchema={
 }
 export const productsSchema={
     id:"product_id",
-    categorierId:"categorie_id",
+    subCategorierId:"sub_categorie_id",
     name:"product_name",
     marque:"product_marque",
     dosage:"product_dosage",
