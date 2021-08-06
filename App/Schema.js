@@ -79,7 +79,7 @@ export const productsSchema={
     id:"product_id",
     subCategorierId:"sub_categorie_id",
     name:"product_name",
-    marque:"product_marque",
+    markId:"mark_id",
     dosage:"product_dosage",
     forme:"product_forme",
     format:"product_format",
@@ -104,7 +104,7 @@ export const inputSchema={
     time:"system_time",    
     userId:"user_id"
 }
-export const boookingsSchema={
+export const bookingsSchema={
     id:"booking_id",
     clientId:"client_id",
     productId:"product_id",
@@ -171,7 +171,7 @@ export const Schema={
     categoriesSchema,
     productsSchema,
     inputSchema,
-    boookingsSchema,
+    bookingsSchema,
     outputSchema,
     payementsSchema,
     marksSchema,

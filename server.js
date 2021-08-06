@@ -18,6 +18,12 @@ import etabliRouter from "./Controllers/CEtablishement.js";
 import userRouter from "./Controllers/CUsers.js"
 import categoriesRouter from "./Controllers/CCategories.js"
 import marksRouter from "./Controllers/CMarks.js"
+import SubCategorieRouter from "./Controllers/CSubCategories.js";
+import productRouter from "./Controllers/CPoducts.js"
+import exerciseRouter from "./Controllers/CExercises.js"
+import providerRouter from "./Controllers/CProviders.js"
+import clientRouter from "./Controllers/CClient.js"
+
  const app = express();
 
 
@@ -29,8 +35,13 @@ import marksRouter from "./Controllers/CMarks.js"
 
 app.use(express.json());
 app.use("/etablishement", etabliRouter);
-app.use('/user',userRouter);
+app.use('/users',userRouter);
 app.use('/categories',categoriesRouter)
 app.use('/marks',marksRouter)
+app.use('/subCategories',SubCategorieRouter)
+app.use('/products',productRouter)
+app.use('/exercises',exerciseRouter)
+app.use('/providers',providerRouter)
+app.use('/clients',clientRouter)
 const PORT = process.env.PORT || 2723;
 app.listen(PORT, () => console.log(`Server start on port ${PORT}`));

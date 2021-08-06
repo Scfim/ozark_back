@@ -8,7 +8,7 @@ class Categories{
     //INSERT CATEGORIE
     static async insert(args,callback) {
         const categorieId = uuidv4();
-        //verify if userId exist
+        //verify if categorieId exist
         //=====================
         Queries.getSpecificFields({
             table: `${categories}`,
