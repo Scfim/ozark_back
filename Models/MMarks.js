@@ -1,9 +1,9 @@
 import Queries from'../App/Queries.js'
 import{databaseSchema,marksSchema} from'../App/Schema.js'
-import crypto from "crypto";
+
 import { v4 as uuidv4 } from "uuid";
 const{id,name,description,date,time,userId} =marksSchema;
-const marks=databaseSchema
+const {marks}=databaseSchema
 class Marks{
     static async insert(args, callback) {
         const markId = uuidv4();

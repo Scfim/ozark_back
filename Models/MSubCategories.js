@@ -1,9 +1,9 @@
 import Queries from"../App/Queries.js"
 import{databaseSchema,subCategoriesSchema} from"../App/Schema.js";
-import crypto from "crypto";
+
 import { v4 as uuidv4 } from "uuid";
 const {id,categorieId,name,type,date,time,userId}=subCategoriesSchema
-const subCategories=databaseSchema
+const {subCategories}=databaseSchema
 class SubCategories{
     static async insert(args, callback) {
         const subCategorieId = uuidv4();

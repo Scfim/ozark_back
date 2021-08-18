@@ -1,9 +1,9 @@
 import Queries from"../App/Queries.js"
 import{databaseSchema,providersSchema} from"../App/Schema.js"
-import crypto from "crypto";
+
 import { v4 as uuidv4 } from "uuid";
 const{id,name,adress,phone,mail,date,time,userId}=providersSchema;
-const providers=databaseSchema;
+const {providers}=databaseSchema;
 class Provider{
     //INSERT PROVIDER
 static async insert(args,callback) {

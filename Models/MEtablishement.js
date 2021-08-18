@@ -36,17 +36,10 @@ class Etablishement{
             values:`?`,
             arguments:["sjdshksjh2323@@#@"]
         }).then((data) => {
-            if (data.length > 0) {
-                callback({
-                    type: "success",
-                    data,
-                });
-            } else {
-                callback({
-                    type: "success",
-                    data: "Empty"
-                });
-            }
+            callback({
+                type: "success",
+                data,
+            });
         })
         .catch((err) => {
             callback({

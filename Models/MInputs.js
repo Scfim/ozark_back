@@ -1,33 +1,39 @@
 import Queries from"../App/Queries.js"
-import{databaseSchema,exercisesSchema} from"../App/Schema.js"
-
+import{databaseSchema,inputSchema} from"../App/Schema.js"
 import { v4 as uuidv4 } from "uuid";
-const{id,startDate,endDate,status,date,time,userId} =exercisesSchema;
-const {exercises}=databaseSchema
-class Exercise{
-   //INSERT exercise
-   static async insert(args,callback) {
-    const exerciseId = uuidv4();
-    //verify if exerciseId exist
+const{id,productId,providerId,quantity,unitePrice,lot,expireDate,exerciseId,dateRecord,timeRecord,comment,date,time,userId} =inputSchema;
+const {input}=databaseSchema;
+export default class Input{
+        //INSERT INPUT
+static async insert(args,callback) {
+    const inputId = uuidv4();
+    //verify if inputId exist
     //=====================
     Queries.getSpecificFields({
-        table: `${exercises}`,
+        table: `${input}`,
         fields: `${id}`,
         whereCloseFields: `${id}=?`,
-        arguments: [exerciseId],
+        arguments: [inputId],
       }).then((data)=>{
         if (data.length === 1 || data.length >= 1) {
             this.signUp(args, callback);
           } else {
                 Queries.addData({
-                    table: `${exercises}`,
-                    fields: `${id},${startDate},${endDate},${status},${date},${time},${userId}`,
-                    values:`?,?,?,?,NOW(),NOW(),?`,
+                    table: `${input}`,
+                    fields: `${id},${productId},${providerId},${quantity},${unitePrice},${lot},${expireDate},${exerciseId},${dateRecord},${timeRecord},${comment},${date},${time},${userId},`,
+                    values:`?,?,?,?,?,?,?,?,?,?,?,NOW(),NOW(),?`,
                     arguments:[
-                        exerciseId,
-                        args.startDate,
-                        args.endDate,
-                        1,
+                        inputId,
+                        args.productId,
+                        args.providerId,
+                        args.quantity,
+                        argsa.unitePrice,
+                        args.lot,
+                        args.expireDate,
+                        args.exerciseId,
+                        args.dateRecord,
+                        args.timeRecord,
+                        args.comment,
                         args.userId
                     ]
                 }).then((data) =>                                       
@@ -44,12 +50,12 @@ class Exercise{
           }
       })
 }
-//GET exercise
+//GET INPUT
 static async get(args, callback) {
     await Queries.getAll({
-    table: `${exercises}`,
-    whereCloseFields: `${id}=? and${status}=?`,
-    arguments: [args.id,1],
+    table: `${input}`,
+    whereCloseFields: `${id}=?`,
+    arguments: [args.id],
     })
     .then((data) => {
         callback({
@@ -64,10 +70,10 @@ static async get(args, callback) {
         });
     });
 }
-//GET exercises
+//GET input
 static async getAll(callback) {
     await Queries.getAll({
-      table: `${exercises}`,
+      table: `${input}`,
       whereCloseFields: `${id}!=?`,
       arguments: ["arg#$##$@#@#2s.id"],
     })
@@ -85,4 +91,3 @@ static async getAll(callback) {
       });
 }
 }
-export default Exercise

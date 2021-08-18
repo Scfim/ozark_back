@@ -122,10 +122,10 @@ export const bookingsSchema={
 export const outputSchema={
     id:"out_traffic_id",
     bookingId:"booking_id",
-    productId:"product_id",
+    bookingNumber:"booking_number",
+    outputNumber:"output_number",
     quantity:"quantity",
-    unitePricice:"unite_price",
-    exerciseId:"exercise_id",
+    unitePrice:"unite_price",   
     exerciseId:"exercise_id",
     dateRecord:"date_record",
     timeRecord:"time_record",
@@ -150,7 +150,7 @@ export const payementsSchema={
 export const databaseSchema={
     users:"users",
     etablishement:"etablishement",
-    provider:"provider",
+    providers:"providers",
     clients:"clients",
     exercises:"exercises",
     categories:"categories",
@@ -160,7 +160,7 @@ export const databaseSchema={
     output:"output_traffic",
     payement:"payement",
     marks:"marks",
-    sub_categories:"sub_categories",
+    subCategories:"sub_categories",
 }
 export const Schema={
     usersSchema,
