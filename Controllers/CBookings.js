@@ -3,7 +3,6 @@ import Booking from "../Models/MBookings.js"
 const routes = express.Router();
 import validator from "./Validator.js";
 import sessionHandler from "../App/session.js"
-import { async } from "q";
 routes.post("/add",sessionHandler,async (request, response)=>{
     var bookingCount=0;
     Booking.getCount((result)=>bookingCount=result.data[0].count+1)

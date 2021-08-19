@@ -96,7 +96,6 @@ routes.get("/getAll", sessionHandler, (request, response) => {
 // LOGIN USER
 routes.post("/login", sessionHandler, (request, response) => {
   const { username, password } = request.body;
-console.log(password)
   var type = "";
   if (validator(username).isString().check() === true) {
     if (validator(password).isString().check() === true) {
@@ -108,18 +107,19 @@ console.log(password)
           password: password,
         })
           .then((user) => {
-            if (user.isAuthenticated) {
-              request.session.user = user;
+            
+            if (user.isAuthenticated) {              
+              request.session.user = user;             
               delete request.session.user.data[0].user_pass_word;
               const id = user.data[0].user_id;
               const token = jwt.sign(
                 { id },
                 "KSJDJDKI98489iriiIUIUTPWOEUE&EOpjosidsuifisoifupio(9878wbGIUSD*y4940ae0w0w98(E&W)(*WENjfhoisudfnIOIOUOIRsfuduue8438490438489eiureodUF*ALAAOPAPoiuspoi847030sdoisKJOIWEIdioss98sdiu834894304309ewufpfspiosfioufpisodfohIS5werOIEWPrlAPAIOI89e980posdjgkldw0KDJKLDLS:werktjw0943uwer908OuoiuWIUEiuiopsdupiofupsufpsudfpoisupeodiuoi*(90-84590jpuoidgisuoISOYPONPSOU&$)",
                 {
-                  expiresIn: "1d",
+                  expiresIn: "24h",
                 }
               );
-
+              
               response.send({ auth: true, token, user: request.session.user });
             } else response.status(200).json(user);
           })
@@ -140,7 +140,7 @@ console.log(password)
                 { id },
                 "KSJDJDKI98489iriiIUIUTPWOEUE&EOpjosidsuifisoifupio(9878wbGIUSD*y4940ae0w0w98(E&W)(*WENjfhoisudfnIOIOUOIRsfuduue8438490438489eiureodUF*ALAAOPAPoiuspoi847030sdoisKJOIWEIdioss98sdiu834894304309ewufpfspiosfioufpisodfohIS5werOIEWPrlAPAIOI89e980posdjgkldw0KDJKLDLS:werktjw0943uwer908OuoiuWIUEiuiopsdupiofupsufpsudfpoisupeodiuoi*(90-84590jpuoidgisuoISOYPONPSOU&$)",
                 {
-                  expiresIn: "1d",
+                  expiresIn: "24h",
                 }
               );
               response.send({ auth: true, token, user: request.session.user });
@@ -154,6 +154,7 @@ console.log(password)
   } else response.send({ type: "failure", message: `Identifiants incorrect` });
 });
 routes.get("/login", sessionHandler, (request, response) => {
+  console.log(request.session.user,request.session)
   if (request.session.user) {
     delete request.session.user.data[0].user_password;
     response.send({ authenticated: true, user: request.session.user });
@@ -180,4 +181,7 @@ const jwtVerify = (req, res, next) => {
 routes.get("/auth", jwtVerify, (request, response, next) => {
   response.send({ auth: true });
 });
+routes.get("/getTest", sessionHandler, (req,res)=>{
+  res.send(req.session.user)
+})
 export default routes;
