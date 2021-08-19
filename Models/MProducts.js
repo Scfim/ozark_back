@@ -70,7 +70,7 @@ static async get(args, callback) {
 }
 //GET products
 static async getAll(callback) {
-    query=`SELECT products.product_name,products.product_alert_stock,products.product_dosage,products.product_format,products.product_forme,marks.mark_name, sub_categories.sub_categorie_id,sub_categories.sub_categorie_name,sub_categories.categorie_id,categories.categorie_name FROM products INNER JOIN sub_categories ON products.sub_categorie_id=sub_categories.categorie_id INNER JOIN categories ON categories.categorie_id= sub_categories.sub_categorie_id INNER JOIN marks on marks.mark_id=products.mark_id`
+    query=`SELECT products.product_name,products.product_alert_stock,products.product_dosage,products.product_format,products.product_forme,marks.mark_name, sub_categories.sub_categorie_id,sub_categories.sub_categorie_name,sub_categories.categorie_id,categories.categorie_name FROM products INNER JOIN sub_categories ON products.sub_categorie_id=sub_categories.sub_categorie_id  INNER JOIN marks on marks.mark_id=products.mark_id`
     await Queries.myQuery({
       query: query,
       whereCloseFields: `products.product_name!=?`,
