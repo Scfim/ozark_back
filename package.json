@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Scfim/ozark_server.git"
+    "url": "https://github.com/Scfim/ozark_server.git"
   },
   "keywords": [
     "application",
@@ -27,9 +27,9 @@
   "author": "scfim",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/user/yourgitrepository/issues"
+    "url": "https://github.com/Scfim/ozark_server/issues"
   },
-  "homepage": "https://github.com/user/yourgitrepository#readme",
+  "homepage": "https://github.com/Scfim/ozark_server#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "colors": "^1.4.0",

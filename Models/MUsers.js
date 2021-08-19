@@ -169,7 +169,7 @@ class User {
                 : reject({
                     type: "failure",
                     isAuthenticated: false,
-                    message:"Erreur d'authentification",
+                    message:"Erreur d'authentification"
                   });
             });
           } else {
