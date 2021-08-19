@@ -1,6 +1,5 @@
 import express from "express";
 import Booking from "../Models/MBookings.js"
-<<<<<<< HEAD
 import Reference from"../Models/MBookingReferences.js"
 import Exercise from "../Models/MExercises.js"
 const routes = express.Router();
@@ -47,25 +46,5 @@ routes.post("/add",sessionHandler,async (request, response)=>{
             }else response.send({ type:"failure", message: "Echec de récuperation de l'execice actif" });
         })
     }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" }); 
-=======
-const routes = express.Router();
-import validator from "./Validator.js";
-import sessionHandler from "../App/session.js"
-import { async } from "q";
-routes.post("/add",sessionHandler,async (request, response)=>{
-    var bookingCount=0;
-    Booking.getCount((result)=>bookingCount=result.data[0].count+1)
-    Booking.insert({
-        productId: productId,
-        clientId:clientId,
-        quantity:quantity,
-        unitePrice:unitePrice,
-        number:bookingCount,
-        description:description,
-        exerciseId:exerciseId,
-        dateRecord:dateRecord,
-        timeRecord:timeRecord,
-        userId:userId,
-    })
->>>>>>> 98ce4a4a22c143686b414ba820ece8e7ded4c940
+
 })
