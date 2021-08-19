@@ -1,8 +1,8 @@
 import Queries from"../App/Queries.js"
 import{databaseSchema,productsSchema} from"../App/Schema.js"
-import crypto from "crypto";
+
 import { v4 as uuidv4 } from "uuid";
-const products=databaseSchema
+const {products}=databaseSchema
 const{id,subCategorieId,markId,name,dosage,forme,format,alertStock,date,time,userId} = productsSchema;
 class Product{
 //INSERT CATEGORIE

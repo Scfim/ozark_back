@@ -104,13 +104,23 @@ export const inputSchema={
     time:"system_time",    
     userId:"user_id"
 }
+export const bookingsReferencesSchema={
+    id:"booking_reference_id",
+    number:"booking_reference_number",
+    date:"date_record",
+    time:"time_record",
+    statusPayement:"status_payment",
+    statOutput:"status_output",
+    userId:"user_id",
+    exerciseId:"exercise_id",
+}
 export const bookingsSchema={
     id:"booking_id",
+    reference:"booking_reference_id",
     clientId:"client_id",
     productId:"product_id",
     quantity:"quantity",
     unitePrice:"unite_price",
-    number:"booking_number",
     description:"booking_description",
     exerciseId:"exercise_id",
     dateRecord:"date_record",
@@ -122,10 +132,10 @@ export const bookingsSchema={
 export const outputSchema={
     id:"out_traffic_id",
     bookingId:"booking_id",
-    productId:"product_id",
+    reference:"booking_reference_id",
+    outputNumber:"output_number",
     quantity:"quantity",
-    unitePricice:"unite_price",
-    exerciseId:"exercise_id",
+    unitePrice:"unite_price",   
     exerciseId:"exercise_id",
     dateRecord:"date_record",
     timeRecord:"time_record",
@@ -137,7 +147,7 @@ export const outputSchema={
 }
 export const payementsSchema={
     id:"payement_id",
-    bookingId:"booking_id",
+    referenceId:"booking_reference_id",
     dateRecord:"date_record",
     timeRecord:"time_record",
     mount:"payement_mount",
@@ -150,7 +160,7 @@ export const payementsSchema={
 export const databaseSchema={
     users:"users",
     etablishement:"etablishement",
-    provider:"provider",
+    providers:"providers",
     clients:"clients",
     exercises:"exercises",
     categories:"categories",
@@ -160,7 +170,8 @@ export const databaseSchema={
     output:"output_traffic",
     payement:"payement",
     marks:"marks",
-    sub_categories:"sub_categories",
+    subCategories:"sub_categories",
+    references:"bookings_references"
 }
 export const Schema={
     usersSchema,
@@ -176,6 +187,7 @@ export const Schema={
     payementsSchema,
     marksSchema,
     subCategoriesSchema,
+    bookingsReferencesSchema,
     databaseSchema
 }
 export default Schema

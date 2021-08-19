@@ -1,34 +1,39 @@
 import Queries from"../App/Queries.js"
-import{databaseSchema,clientsSchema} from"../App/Schema.js"
-
+import{databaseSchema,inputSchema} from"../App/Schema.js"
 import { v4 as uuidv4 } from "uuid";
-const{id,name,adress,phone,mail,date,time,userId}=clientsSchema;
-const {clients}=databaseSchema;
-class Client{
-    //INSERT client
+const{id,productId,providerId,quantity,unitePrice,lot,expireDate,exerciseId,dateRecord,timeRecord,comment,date,time,userId} =inputSchema;
+const {input}=databaseSchema;
+export default class Input{
+        //INSERT INPUT
 static async insert(args,callback) {
-    const clientId = uuidv4();
-    //verify if clientId exist
+    const inputId = uuidv4();
+    //verify if inputId exist
     //=====================
     Queries.getSpecificFields({
-        table: `${clients}`,
+        table: `${input}`,
         fields: `${id}`,
         whereCloseFields: `${id}=?`,
-        arguments: [clientId],
+        arguments: [inputId],
       }).then((data)=>{
         if (data.length === 1 || data.length >= 1) {
             this.signUp(args, callback);
           } else {
                 Queries.addData({
-                    table: `${clients}`,
-                    fields: `${id},${name},${adress},${phone},${mail},${date},${time},${userId}`,
-                    values:`?,?,?,?,?,NOW(),NOW(),?`,
+                    table: `${input}`,
+                    fields: `${id},${productId},${providerId},${quantity},${unitePrice},${lot},${expireDate},${exerciseId},${dateRecord},${timeRecord},${comment},${date},${time},${userId},`,
+                    values:`?,?,?,?,?,?,?,?,?,?,?,NOW(),NOW(),?`,
                     arguments:[
-                        clientId,
-                        args.name,
-                        args.adress,
-                        args.phone,
-                        argsa.mail,
+                        inputId,
+                        args.productId,
+                        args.providerId,
+                        args.quantity,
+                        argsa.unitePrice,
+                        args.lot,
+                        args.expireDate,
+                        args.exerciseId,
+                        args.dateRecord,
+                        args.timeRecord,
+                        args.comment,
                         args.userId
                     ]
                 }).then((data) =>                                       
@@ -45,10 +50,10 @@ static async insert(args,callback) {
           }
       })
 }
-//GET client
+//GET INPUT
 static async get(args, callback) {
     await Queries.getAll({
-    table: `${clients}`,
+    table: `${input}`,
     whereCloseFields: `${id}=?`,
     arguments: [args.id],
     })
@@ -65,10 +70,10 @@ static async get(args, callback) {
         });
     });
 }
-//GET clients
+//GET input
 static async getAll(callback) {
     await Queries.getAll({
-      table: `${clients}`,
+      table: `${input}`,
       whereCloseFields: `${id}!=?`,
       arguments: ["arg#$##$@#@#2s.id"],
     })
@@ -86,4 +91,3 @@ static async getAll(callback) {
       });
 }
 }
-export default  Client

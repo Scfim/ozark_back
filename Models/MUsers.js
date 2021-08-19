@@ -159,7 +159,7 @@ class User {
       })
         .then((data) => {
           if (data.length === 1 || data.length >= 1) {
-            compare(pwd, data[0].user_password, (response) => {
+            compare(pwd, data[0].user_pass_word, (response) => {
               response.type === "success"
                 ? resolve({
                     type: "success",

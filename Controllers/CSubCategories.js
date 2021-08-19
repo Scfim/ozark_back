@@ -4,14 +4,14 @@ const routes = express.Router();
 import validator from "./Validator.js";
 import sessionHandler from "../App/session.js"
 routes.post("/add",sessionHandler, (request, response)=>{
-    const  {subCategorieId,name,type,}= request.body;
+    const  {categorieId,name,type,}= request.body;
     if(request.session.user){
         const userId=request.session.user.data[0].user_id
         if(validator(name).isString().check()){
             if(validator(type).isString().check){
-                if(validator(subCategorieId).isString().check){
+                if(validator(categorieId).isString().check){
                     SubCategories.insert({
-                        subCategorieId:subCategorieId,
+                        categorieId:categorieId,
                         name:name,
                         type: type,
                         userId:userId,
@@ -38,7 +38,7 @@ routes.post("/getOne",sessionHandler, (request, response)=>{
 routes.post("/geCategories",sessionHandler, (request, response)=>{
    const categorieName=request.body.categorieName
     if(request.session.user){
-        SubCategories.get({
+        SubCategories.getCategories({
             name:categorieName,
         },(result)=>response.send(result))
     }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });

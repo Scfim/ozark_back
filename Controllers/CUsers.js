@@ -70,22 +70,22 @@ routes.get("/getAll",sessionHandler, (request, response) => {
 });
 // LOGIN USER
 routes.post("/login", sessionHandler, (request, response) => {
-    const { user_, password } = request.body;
+    const { username, password } = request.body;
   
     var type = "";
-    if (validator(user_).isString().check() === true) {
+    if (validator(username, password).isString().check() === true) {
       if (validator(password).isString().check() === true) {
-        if (validator(user_).isEmailAddress().check() === true) {
+        if (validator(username, password).isEmailAddress().check() === true) {
           type = "user_mail_adress";
           User.login({
             type: type,
-            username: user_,
+            username: username,
             password: password,
           })
             .then((user) => {
               if (user.isAuthenticated) {
                 request.session.user = user;
-                delete request.session.user.data[0].user_password;
+                delete request.session.user.data[0].user_pass_word;
                 const id = user.data[0].user_id;
                 const token = jwt.sign({ id }, "KSJDJDKI98489iriiIUIUTPWOEUE&EOpjosidsuifisoifupio(9878wbGIUSD*y4940ae0w0w98(E&W)(*WENjfhoisudfnIOIOUOIRsfuduue8438490438489eiureodUF*ALAAOPAPoiuspoi847030sdoisKJOIWEIdioss98sdiu834894304309ewufpfspiosfioufpisodfohIS5werOIEWPrlAPAIOI89e980posdjgkldw0KDJKLDLS:werktjw0943uwer908OuoiuWIUEiuiopsdupiofupsufpsudfpoisupeodiuoi*(90-84590jpuoidgisuoISOYPONPSOU&$)", {
                   expiresIn: "1d",
@@ -95,17 +95,17 @@ routes.post("/login", sessionHandler, (request, response) => {
               } else response.status(200).json(user);
             })
             .catch((err) => response.send(err));
-        } else if (validator(user_).isPhoneNumber().check() === true) {
+        } else if (validator(username).isPhoneNumber().check() === true) {
           type = "user_phone_number";
           User.login({
             type: type,
-            username: user_,
+            username: username,
             password: password,
           })
             .then((user) => {
               if (user.isAuthenticated) {
                 request.session.user = user;
-                delete request.session.user.data[0].user_password;
+                delete request.session.user.data[0].user_pass_word;
                 const id = user.data[0].user_id;
                 const token = jwt.sign({ id }, "KSJDJDKI98489iriiIUIUTPWOEUE&EOpjosidsuifisoifupio(9878wbGIUSD*y4940ae0w0w98(E&W)(*WENjfhoisudfnIOIOUOIRsfuduue8438490438489eiureodUF*ALAAOPAPoiuspoi847030sdoisKJOIWEIdioss98sdiu834894304309ewufpfspiosfioufpisodfohIS5werOIEWPrlAPAIOI89e980posdjgkldw0KDJKLDLS:werktjw0943uwer908OuoiuWIUEiuiopsdupiofupsufpsudfpoisupeodiuoi*(90-84590jpuoidgisuoISOYPONPSOU&$)", {
                   expiresIn: "1d",
@@ -121,7 +121,7 @@ routes.post("/login", sessionHandler, (request, response) => {
 routes.get("/login",sessionHandler, (request, response) => {
 
 if (request.session.user) {
-    delete request.session.user.data[0].user_password;
+    delete request.session.user.data[0].user_pass_word;
     response.send({ authenticated: true, user: request.session.user });
 } else response.send({ authenticated: false });
 });

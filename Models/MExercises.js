@@ -1,9 +1,9 @@
 import Queries from"../App/Queries.js"
 import{databaseSchema,exercisesSchema} from"../App/Schema.js"
-import crypto from "crypto";
+
 import { v4 as uuidv4 } from "uuid";
 const{id,startDate,endDate,status,date,time,userId} =exercisesSchema;
-const exercises=databaseSchema
+const {exercises}=databaseSchema
 class Exercise{
    //INSERT exercise
    static async insert(args,callback) {
@@ -50,6 +50,25 @@ static async get(args, callback) {
     table: `${exercises}`,
     whereCloseFields: `${id}=? and${status}=?`,
     arguments: [args.id,1],
+    })
+    .then((data) => {
+        callback({
+        type: "success",
+        data,
+        });
+    })
+    .catch((err) => {
+        callback({
+        type: "failure",
+        err,
+        });
+    });
+}
+static async getCourent(callback) {
+    await Queries.getAll({
+    table: `${exercises}`,
+    whereCloseFields: `${status}=?`,
+    arguments: [1],
     })
     .then((data) => {
         callback({
