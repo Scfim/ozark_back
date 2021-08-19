@@ -38,7 +38,7 @@ routes.post("/getOne",sessionHandler, (request, response)=>{
 routes.post("/geCategories",sessionHandler, (request, response)=>{
    const categorieName=request.body.categorieName
     if(request.session.user){
-        SubCategories.get({
+        SubCategories.getCategories({
             name:categorieName,
         },(result)=>response.send(result))
     }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });

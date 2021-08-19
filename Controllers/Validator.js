@@ -25,7 +25,6 @@ export default function validator(value) {
         }
         return app
     }
-
     app.loadValue = function () {
 
         return app.value !== undefined ? app.value : app
@@ -53,6 +52,7 @@ export default function validator(value) {
     }
     app.isDate  = function(){
         const dateRegex = /(^([\d]){4}(\-)([\d]{2})(\-)([\d]{2})$)|(^([\d]){2}(\-)([\d]{2})(\-)([\d]{4})$)/i
+        // const dateRegex2 = /(^([\d]{4})(\-[\d]{2}){2})$)|(^(\-[\d]{2}){2})([\d]{4})$)/i
         const regex = new RegExp(dateRegex)
         if (typeof value == "string" && regex.test(value)) {
             app.value = value

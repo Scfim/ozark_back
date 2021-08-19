@@ -1,7 +1,7 @@
 import Queries from"../App/Queries.js"
 import{databaseSchema,outputSchema} from "../App/schema.js"
 import { v4 as uuidv4 } from "uuid";
-const{id,bookingId,bookingNumber,outputNumber,quantity,unitePrice,exerciseId,dateRecord,timeRecord,date,time,perisable,envoy,userId}=outputSchema;
+const{id,bookingId,reference,outputNumber,quantity,unitePrice,exerciseId,dateRecord,timeRecord,date,time,perisable,envoy,userId}=outputSchema;
 const {output}=databaseSchema;
 export default class Ouptut{
    
@@ -20,13 +20,13 @@ export default class Ouptut{
               } else {
                     Queries.addData({
                         table: `${output}`,
-                        fields: `${id},${bookingId},${bookingNumber},${outputNumber},${quantity},${unitePrice},
+                        fields: `${id},${bookingId},${reference},${outputNumber},${quantity},${unitePrice},
                         ${exerciseId},${dateRecord},${timeRecord},${perisable},${envoy},${date},${time},${userId};`,
                         values:`?,?,?,?,?,?,?,?,?,?,?,NOW(),NOW(),?`,
                         arguments:[
                             outputId,
                             args.bookingId,
-                            args.bookingNumber,
+                            args.reference,
                             args.outputNumber,
                             args.quantity,
                             argsa.unitePrice,                           

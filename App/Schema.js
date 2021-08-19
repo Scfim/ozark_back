@@ -77,7 +77,7 @@ export const marksSchema={
 }
 export const productsSchema={
     id:"product_id",
-    subCategorierId:"sub_categorie_id",
+    subCategorieId:"sub_categorie_id",
     name:"product_name",
     markId:"mark_id",
     dosage:"product_dosage",
@@ -104,13 +104,23 @@ export const inputSchema={
     time:"system_time",    
     userId:"user_id"
 }
+export const bookingsReferencesSchema={
+    id:"booking_reference_id",
+    number:"booking_reference_number",
+    date:"date_record",
+    time:"time_record",
+    statusPayement:"status_payment",
+    statOutput:"status_output",
+    userId:"user_id",
+    exerciseId:"exercise_id",
+}
 export const bookingsSchema={
     id:"booking_id",
+    reference:"booking_reference_id",
     clientId:"client_id",
     productId:"product_id",
     quantity:"quantity",
     unitePrice:"unite_price",
-    number:"booking_number",
     description:"booking_description",
     exerciseId:"exercise_id",
     dateRecord:"date_record",
@@ -122,7 +132,7 @@ export const bookingsSchema={
 export const outputSchema={
     id:"out_traffic_id",
     bookingId:"booking_id",
-    bookingNumber:"booking_number",
+    reference:"booking_reference_id",
     outputNumber:"output_number",
     quantity:"quantity",
     unitePrice:"unite_price",   
@@ -137,7 +147,7 @@ export const outputSchema={
 }
 export const payementsSchema={
     id:"payement_id",
-    bookingId:"booking_id",
+    referenceId:"booking_reference_id",
     dateRecord:"date_record",
     timeRecord:"time_record",
     mount:"payement_mount",
@@ -161,6 +171,8 @@ export const databaseSchema={
     payement:"payement",
     marks:"marks",
     subCategories:"sub_categories",
+    references:"bookings_references"
+
 }
 export const Schema={
     usersSchema,
@@ -176,6 +188,7 @@ export const Schema={
     payementsSchema,
     marksSchema,
     subCategoriesSchema,
+    bookingsReferencesSchema,
     databaseSchema
 }
 export default Schema

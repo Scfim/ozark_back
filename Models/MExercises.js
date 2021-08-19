@@ -64,6 +64,25 @@ static async get(args, callback) {
         });
     });
 }
+static async getCourent(callback) {
+    await Queries.getAll({
+    table: `${exercises}`,
+    whereCloseFields: `${status}=?`,
+    arguments: [1],
+    })
+    .then((data) => {
+        callback({
+        type: "success",
+        data,
+        });
+    })
+    .catch((err) => {
+        callback({
+        type: "failure",
+        err,
+        });
+    });
+}
 //GET exercises
 static async getAll(callback) {
     await Queries.getAll({
