@@ -148,6 +148,7 @@ routes.post("/login", sessionHandler, (request, response) => {
 });
 
 routes.get("/login", sessionHandler, (request, response) => {
+  console.log(request.session.user,request.session)
   if (request.session.user) {
     delete request.session.user.data[0].user_password;
     response.send({ authenticated: true, user: request.session.user });
@@ -174,4 +175,7 @@ const jwtVerify = (req, res, next) => {
 routes.get("/auth", jwtVerify, (request, response, next) => {
   response.send({ auth: true });
 });
+routes.get("/getTest", sessionHandler, (req,res)=>{
+  res.send(req.session.user)
+})
 export default routes;

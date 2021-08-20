@@ -8,7 +8,7 @@
  */
 
 /**
- * First step import all depenecies usable in server config here
+ * First step import all dependencies usable in server config here
  */
 
 import express from "express"
@@ -25,16 +25,18 @@ import providerRouter from "./Controllers/CProviders.js"
 import clientRouter from "./Controllers/CClient.js"
 import bookingRouter from "./Controllers/CBookings.js"
 
- const app = express();
+import cookieParser from "cookie-parser"
 
+
+ const app = express();
+ app.use(cookieParser())
+ app.use(express.json());
 
  app.use(cors({
   methods:["GET","POST"],
   origin:["http://192.168.0.100:3000", "http://localhost:3000"],
   credentials:true
 }));
-
-app.use(express.json());
 app.use("/etablishement", etabliRouter);
 app.use('/users',userRouter);
 app.use('/categories',categoriesRouter)
