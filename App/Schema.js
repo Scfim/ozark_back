@@ -65,7 +65,8 @@ export const subCategoriesSchema = {
     type:"sub_categorie_type",
     date:"system_date",
     time:"system_time",
-    userId:"user_id"
+    userId:"user_id",
+    markId:"mark_id",
 }
 export const marksSchema={
     id:"mark_id",
@@ -78,8 +79,7 @@ export const marksSchema={
 export const productsSchema={
     id:"product_id",
     subCategorieId:"sub_categorie_id",
-    name:"product_name",
-    markId:"mark_id",
+    name:"product_name",    
     dosage:"product_dosage",
     forme:"product_forme",
     format:"product_format",

@@ -27,7 +27,7 @@ static async insert(args,callback) {
                         args.productId,
                         args.providerId,
                         args.quantity,
-                        argsa.unitePrice,
+                        args.unitePrice,
                         args.lot,
                         args.expireDate,
                         args.exerciseId,
