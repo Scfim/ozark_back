@@ -4,13 +4,13 @@ const routes = express.Router();
 import validator from "./Validator.js";
 import sessionHandler from "../App/session.js"
 routes.post("/add",sessionHandler, (request, response)=>{
-    const  {subCategorieId,name,dosage,forme,format,alertStock}= request.body;
+    const  {subCategorieId,name,dosage,forme,format,alertStock,markId}= request.body;
     if(request.session.user){
         const userId=request.session.user.data[0].user_id
         if(validator(name).isString().check()){
             if(validator(subCategorieId).isString().check){
                 Products.insert({
-                    subCategorieId:subCategorieId,                   
+                    markId:markId,                   
                     name:name,
                     dosage:dosage,
                     forme:forme,

@@ -2,7 +2,7 @@ import Queries from"../App/Queries.js"
 import{databaseSchema,subCategoriesSchema} from"../App/Schema.js";
 
 import { v4 as uuidv4 } from "uuid";
-const {id,categorieId,name,type,date,time,userId,markId}=subCategoriesSchema
+const {id,categorieId,name,type,date,time,userId}=subCategoriesSchema
 const {subCategories}=databaseSchema
 class SubCategories{
     static async insert(args, callback) {
@@ -20,7 +20,7 @@ class SubCategories{
             } else {
                 Queries.addData({
                     table: `${subCategories}`,
-                    fields: `${id},${categorieId},${name},${type},${date},${time},${userId},${markId}`,
+                    fields: `${id},${categorieId},${name},${type},${date},${time},${userId}`,
                     values:`?,?,?,?,NOW(),NOW(),?`,
                     arguments:[
                         subCategorieId,

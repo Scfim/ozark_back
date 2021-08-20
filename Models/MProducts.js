@@ -3,7 +3,7 @@ import{databaseSchema,productsSchema} from"../App/Schema.js"
 
 import { v4 as uuidv4 } from "uuid";
 const {products}=databaseSchema
-const{id,subCategorieId,name,dosage,forme,format,alertStock,date,time,userId} = productsSchema;
+const{id,markId,name,dosage,forme,format,alertStock,date,time,userId} = productsSchema;
 class Product{
 //INSERT CATEGORIE
 static async insert(args,callback) {
@@ -21,11 +21,11 @@ static async insert(args,callback) {
           } else {
                 Queries.addData({
                     table: `${products}`,
-                    fields: `${id},${subCategorieId},${name},${dosage},${forme},${format},${alertStock},${date},${time},${userId}`,
-                    values:`?,?,?,?,?,?,?,?,NOW(),NOW(),?`,
+                    fields: `${id}${markId},${name},${dosage},${forme},${format},${alertStock},${date},${time},${userId}`,
+                    values:`?,?,?,?,?,?,?,NOW(),NOW(),?`,
                     arguments:[
-                        productId,
-                        args.subCategorieId,
+                        productId,                        
+                        args.markId,
                         args.name,
                         args.dosage,
                         args.forme,

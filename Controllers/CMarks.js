@@ -14,6 +14,7 @@ routes.post("/add",sessionHandler, (request, response)=>{
                     name:name,
                     description: description,
                     userId:userId,
+                    subCategorieId:subCategorieId
                 },
                 (result) => {
                     response.send(result);

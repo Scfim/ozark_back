@@ -67,17 +67,7 @@ CREATE TABLE IF NOT EXISTS exercises(
     user_id VARCHAR(256),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
--- CREATE TABLE MARQUE
-CREATE TABLE IF NOT EXISTS marks (
-	mark_id VARCHAR(256) PRIMARY KEY NOT NULL,   
-    mark_name VARCHAR(100) NOT NULL,
-    mark_description TEXT,
-    system_date DATE NOT NULL,
-    system_time TIME NOT NULL,
-    user_id VARCHAR(256),
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
-    
-);
+
 -- CREATE TABLE CATEGORIES
 CREATE TABLE IF NOT EXISTS categories(
 	categorie_id VARCHAR(256) PRIMARY KEY NOT NULL,    
@@ -92,30 +82,40 @@ CREATE TABLE IF NOT EXISTS categories(
 CREATE TABLE IF NOT EXISTS sub_categories(
 	sub_categorie_id VARCHAR(256) PRIMARY KEY NOT NULL,
     categorie_id VARCHAR(256),
-    mark_id VARCHAR(256),
 	sub_categorie_name VARCHAR(100) NOT NULL,
     sub_categorie_type VARCHAR(20) NOT NULL,
     system_date DATE NOT NULL,
     system_time TIME NOT NULL,
     user_id VARCHAR(256),    
-    FOREIGN KEY (categorie_id) REFERENCES categories(categorie_id),    
-    FOREIGN KEY (mark_id) REFERENCES marks(mark_id),
+    FOREIGN KEY (categorie_id) REFERENCES categories(categorie_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
-
+-- CREATE TABLE MARQUE
+CREATE TABLE IF NOT EXISTS marks (
+	mark_id VARCHAR(256) PRIMARY KEY NOT NULL,
+    sub_categorie_id VARCHAR(256),
+    mark_name VARCHAR(100) NOT NULL,
+    mark_description TEXT,
+    system_date DATE NOT NULL,
+    system_time TIME NOT NULL,
+    user_id VARCHAR(256),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+	FOREIGN KEY (sub_categorie_id) REFERENCES sub_categories(sub_categorie_id)    
+);
 -- CREATE TABLE PRODUCTS
 CREATE TABLE IF NOT EXISTS products(
 	product_id VARCHAR(256) PRIMARY KEY NOT NULL,
-	sub_categorie_id VARCHAR(256) NOT NULL,    
+	mark_id VARCHAR(256) NOT NULL,     
 	product_name VARCHAR(100) NOT NULL,
+	product_marque VARCHAR(100) NULL,
 	product_dosage VARCHAR(20) NULL,
 	product_forme VARCHAR(50) NULL,
 	product_format VARCHAR(50) NULL,
 	product_alert_stock DOUBLE NULL,
     system_date DATE NOT NULL,
     system_time TIME NOT NULL,
-    user_id VARCHAR(256),
-    FOREIGN KEY (sub_categorie_id) REFERENCES sub_categories(sub_categorie_id),
+    user_id VARCHAR(256),   
+    FOREIGN KEY (mark_id) REFERENCES marks(mark_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
