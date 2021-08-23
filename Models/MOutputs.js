@@ -29,7 +29,7 @@ export default class Ouptut{
                             args.reference,
                             args.outputNumber,
                             args.quantity,
-                            argsa.unitePrice,                           
+                            args.unitePrice,                           
                             args.exerciseId,
                             args.dateRecord,
                             args.timeRecord,

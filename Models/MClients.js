@@ -28,7 +28,7 @@ static async insert(args,callback) {
                         args.name,
                         args.adress,
                         args.phone,
-                        argsa.mail,
+                        args.mail,
                         args.userId
                     ]
                 }).then((data) =>                                       

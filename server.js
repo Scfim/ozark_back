@@ -23,7 +23,10 @@ import productRouter from "./Controllers/CPoducts.js"
 import exerciseRouter from "./Controllers/CExercises.js"
 import providerRouter from "./Controllers/CProviders.js"
 import clientRouter from "./Controllers/CClient.js"
+import bookingRouter from "./Controllers/CBookings.js"
+
 import cookieParser from "cookie-parser"
+
 
  const app = express();
  app.use(cookieParser())
@@ -43,5 +46,6 @@ app.use('/products',productRouter)
 app.use('/exercises',exerciseRouter)
 app.use('/providers',providerRouter)
 app.use('/clients',clientRouter)
+app.use('/bookings',bookingRouter)
 const PORT = process.env.PORT || 2723;
 app.listen(PORT, () => console.log(`Server start on port ${PORT}`));

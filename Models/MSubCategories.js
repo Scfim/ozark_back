@@ -27,7 +27,8 @@ class SubCategories{
                         args.subCategorieId,
                         args.name,
                         args.type,
-                        args.userId
+                        args.userId,
+                        args.markId
                     ]
                 }).then((data) =>                                       
                     callback({

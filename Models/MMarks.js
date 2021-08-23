@@ -2,7 +2,7 @@ import Queries from'../App/Queries.js'
 import{databaseSchema,marksSchema} from'../App/Schema.js'
 
 import { v4 as uuidv4 } from "uuid";
-const{id,name,description,date,time,userId} =marksSchema;
+const{id,name,description,date,time,userId,subCategorieId} =marksSchema;
 const {marks}=databaseSchema
 class Marks{
     static async insert(args, callback) {
@@ -20,9 +20,9 @@ class Marks{
             } else {
                 Queries.addData({
                     table: `${marks}`,
-                    fields: `${id},${name},${description},${date},${time},${userId}`,
-                    values:`?,?,?,NOW(),NOW(),?`,
-                    arguments:[markId,args.name,args.description,args.userId]
+                    fields: `${id},${name},${description},${date},${time},${userId},${subCategorieId}`,
+                    values:`?,?,?,NOW(),NOW(),?,?`,
+                    arguments:[markId,args.name,args.description,args.userId,args.subCategorieId]
                 }).then((data) =>                                       
                     callback({
                     type: "success",
