@@ -10,7 +10,7 @@ routes.post("/add",sessionHandler, (request, response)=>{
         if(validator(startDate).isDate().check()){
             if(validator(endDate).isDate().check()){
                 var diffDate =  Math.floor(( Date.parse(endDate) - Date.parse(startDate) ) / 86400000);
-                if(diffDate<1){
+                if(diffDate>28){
                     Exercises.insert({
                         startDate:startDate,
                         endDate:endDate,
@@ -20,11 +20,11 @@ routes.post("/add",sessionHandler, (request, response)=>{
                             response.send(result);
                         
                         })
-                }else response.send({ type:"la date din doit être superieur a celui de debut" });
+                }else response.send({ type:"faillure",message:"la date din doit être superieur a celui de debut" });
         
-            }else response.send({ type:"la date de debut est invalide" });
-        }else response.send({ type:"la date de fin est invalide" });
-    }
+            }else response.send({ type:"faillure",message:"la date de debut est invalide" });
+        }else response.send({ type:"faillure",message:"la date de fin est invalide" });
+    }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
 })
 routes.post("/getOne",sessionHandler, (request, response)=>{
     const exerciseId=request.body.exerciseId

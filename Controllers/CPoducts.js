@@ -21,7 +21,7 @@ routes.post("/add",sessionHandler, (request, response)=>{
                     response.send(result);
                 
                 })
-            }else response.send({ type:"le sous categorie doit etre du type chaine de caractaire" });
+            }else response.send({ type:"faillure",message:"le sous categorie doit etre du type chaine de caractaire" });
         }else response.send({ type:"failure", message: "Le nom doit être du type chaine des caractaire" });
      }else response.send({ type:"failure", message: "Vous devez être connecté pour effectuer cette opération" });
     

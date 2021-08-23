@@ -21,8 +21,8 @@ routes.post("/add",sessionHandler, (request, response)=>{
                         response.send(result);
                     
                     })
-                }else response.send({ type:"le némero est invalide" });
-            }else response.send({ type:"l'adress doit être du type chaine des caractaire" });
+                }else response.send({ type:"faillure",message:"le némero est invalide" });
+            }else response.send({ type:"faillure",message:"l'adress doit être du type chaine des caractaire" });
         }else response.send({ type:"failure", message: "Le nom doit être du type chaine des caractaire" });
      }else response.send({ type:"failure", message: "Vous devez être connecté pour effectuer cette opération" });
     

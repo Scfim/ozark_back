@@ -33,6 +33,7 @@ class Exercise{
                 }).then((data) =>                                       
                     callback({
                     type: "success",
+                    message: "Enregistrement effectuer"
                     })
                 ).catch((err) =>                              
                     callback({
