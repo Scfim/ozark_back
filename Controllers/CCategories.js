@@ -5,6 +5,7 @@ import validator from "./Validator.js";
 import sessionHandler from "../App/session.js"
 routes.post("/add",sessionHandler, (request, response)=>{
     const  {name,type,}= request.body;
+    console.log(name)
     if(request.session.user){
         const userId=request.session.user.data[0].user_id
         if(validator(name).isString().check()){
