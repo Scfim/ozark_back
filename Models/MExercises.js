@@ -30,11 +30,29 @@ class Exercise{
                         1,
                         args.userId
                     ]
-                }).then((data) =>                                       
-                    callback({
-                    type: "success",
-                    message: "Enregistrement effectuer"
-                    })
+                }).then((data) =>{
+                  if (data.length === 1 || data.length >= 1) {
+                    Queries.updateData(
+                      {
+                        table:`${exercises}`,
+                        fields:`${status}=?`,
+                        whereCloseFields: `${id}!=?`,
+                        arguments: [0,exerciseId]
+                      }
+                    ).then(
+                      (data) =>callback({
+                      type: "success",
+                      message:"Exercice enregistrer et configurer",                      
+                      })).catch((err) =>                              
+                      callback({
+                      type: "failure",
+                      message:"Echec d'activation de l'exercice",
+                      err,
+                      })
+                  );
+                  }
+                }                                       
+                    
                 ).catch((err) =>                              
                     callback({
                     type: "failure",

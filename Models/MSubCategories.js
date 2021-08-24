@@ -119,8 +119,8 @@ class SubCategories{
           } else {
               Queries.update({
                   table: `${subCategories}`,
-                  fields: `${name},${id}`,
-                  values:`?,?`,
+                  fields: `${name}=?`,
+                  whereCloseFields:`${id}=?`,
                   arguments:[args.name,args.id]
               }).then((data) =>                                       
                   callback({

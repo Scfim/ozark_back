@@ -135,8 +135,8 @@ class Marks{
           } else {
               Queries.update({
                   table: `${marks}`,
-                  fields: `${name},${id}`,
-                  values:`?,?`,
+                  fields: `${name}=?`,
+                  whereCloseFields:`${id}=?`,
                   arguments:[args.name,args.id]
               }).then((data) =>                                       
                   callback({

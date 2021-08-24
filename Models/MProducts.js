@@ -161,8 +161,8 @@ static async update(args, callback){
         } else {
             Queries.update({
                 table: `${products}`,
-                fields: `${name},${id}`,
-                values:`?,?`,
+                fields: `${name}=?`,
+                whereCloseFields: `${id}=?`,
                 arguments:[args.name,args.id]
             }).then((data) =>                                       
                 callback({
