@@ -19,24 +19,85 @@ class Categories{
             if (data.length === 1 || data.length >= 1) {
                 this.signUp(args, callback);
               } else {
-                    Queries.addData({
-                        table: `${categories}`,
-                        fields: `${id},${name},${type},${date},${time},${userId}`,
-                        values:`?,?,?,NOW(),NOW(),?`,
-                        arguments:[categorieId,args.name,args.type,args.userId]
-                    }).then((data) =>                                       
-                        callback({
-                        type: "success",
-                        })
-                    ).catch((err) =>                              
-                        callback({
+                Queries.getSpecificFields({
+                  table: `${categories}`,
+                  fields: `${name}`,
+                  whereCloseFields: `${args.name}=?`,
+                  arguments: [args.name],
+                }).then((data)=>{
+                  if (data.length === 1 || data.length >= 1) {
+                      callback({
+                        type:"failure", message:"La categorie avec le meme nom existe déjà"
+                      })
+                    } else {
+                        Queries.addData({
+                            table: `${categories}`,
+                            fields: `${id},${name},${type},${date},${time},${userId}`,
+                            values:`?,?,?,NOW(),NOW(),?`,
+                            arguments:[categorieId,args.name,args.type,args.userId]
+                        }).then((data) =>                                       
+                            callback({
+                            type: "success",message:"Enregistrement effectué"
+                            })
+                        ).catch((err) =>                              
+                            callback({
+                            type: "failure",
+                            message:"Echec d'enregistrement",
+                            err,
+                            })
+                        );
+                    }}).catch((err) =>                              
+                      callback({
                         type: "failure",
-                        message:"Echec d'enregistrement",
+                        message:"Echec de recuperation du nom",
                         err,
-                        })
+                      })
                     );
               }
+          }).catch((err) =>                              
+          callback({
+            type: "failure",
+            message:"Echec de recuperation de l'id",
+            err,
           })
+        );
+    }
+    static async update(args, callback){
+      Queries.getSpecificFields({
+        table: `${categories}`,
+        fields: `${name}`,
+        whereCloseFields: `${args.name}=?`,
+        arguments: [args.name],
+      }).then((data)=>{
+        if (data.length === 1 || data.length >= 1) {
+            callback({
+              type:"failure", message:"La categorie avec le meme nom existe déjà"
+            })
+          } else {
+              Queries.update({
+                  table: `${categories}`,
+                  fields: `${name},${id}`,
+                  values:`?,?`,
+                  arguments:[args.name,args.id]
+              }).then((data) =>                                       
+                  callback({
+                  type: "success",
+                  message: "Modification effectuée"
+                  })
+              ).catch((err) =>                              
+                  callback({
+                  type: "failure",
+                  message:"Echec d'enregistrement",
+                  err,
+                  })
+              );
+          }}).catch((err) =>                              
+            callback({
+              type: "failure",
+              message:"Echec de recuperation du nom",
+              err,
+            })
+          );
     }
     //GET CATEGORIE
     static async get(args, callback) {

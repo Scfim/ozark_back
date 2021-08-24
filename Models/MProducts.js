@@ -19,31 +19,50 @@ static async insert(args,callback) {
         if (data.length === 1 || data.length >= 1) {
             this.signUp(args, callback);
           } else {
-                Queries.addData({
-                    table: `${products}`,
-                    fields: `${id}${markId},${name},${dosage},${forme},${format},${alertStock},${date},${time},${userId}`,
-                    values:`?,?,?,?,?,?,?,NOW(),NOW(),?`,
-                    arguments:[
-                        productId,                        
-                        args.markId,
-                        args.name,
-                        args.dosage,
-                        args.forme,
-                        args.format,
-                        args.alertStock,
-                        args.userId
-                    ]
-                }).then((data) =>                                       
+            Queries.getSpecificFields({
+                table: `${products}`,
+                fields: `${name}`,
+                whereCloseFields: `${args.name}=? and ${markId}=?`,
+                arguments: [args.name,args.markId],
+              }).then((data)=>{
+                if (data.length === 1 || data.length >= 1) {
                     callback({
-                    type: "success",
+                      type:"failure", message:"La marque avec le meme nom existe déjà"
                     })
-                ).catch((err) =>                              
-                    callback({
+                  } else {
+                        Queries.addData({
+                            table: `${products}`,
+                            fields: `${id},${markId},${name},${dosage},${forme},${format},${alertStock},${date},${time},${userId}`,
+                            values:`?,?,?,?,?,?,?,NOW(),NOW(),?`,
+                            arguments:[
+                                productId,                        
+                                args.markId,
+                                args.name,
+                                args.dosage,
+                                args.forme,
+                                args.format,
+                                args.alertStock,
+                                args.userId
+                            ]
+                        }).then((data) =>                                       
+                            callback({
+                            type: "success",
+                            })
+                        ).catch((err) =>                              
+                            callback({
+                            type: "failure",
+                            message:"Echec d'enregistrement",
+                            err,
+                            })
+                        );
+                    }
+              }).catch((err) =>                              
+                callback({
                     type: "failure",
-                    message:"Echec d'enregistrement",
+                    message:"Erreur lors de la recuperation du nom",
                     err,
-                    })
-                );
+                })
+          );
           }
       })
 }
@@ -69,10 +88,9 @@ static async get(args, callback) {
 }
 //GET products
 static async getAll(callback) {
-    query=`SELECT products.product_name,products.product_alert_stock,products.product_dosage,products.product_format,products.product_forme,marks.mark_name, sub_categories.sub_categorie_id,sub_categories.sub_categorie_name,sub_categories.categorie_id,categories.categorie_name FROM products INNER JOIN sub_categories ON products.sub_categorie_id=sub_categories.sub_categorie_id  INNER JOIN marks on marks.mark_id=products.mark_id`
+    query=`SELECT products.product_name,products.product_alert_stock,products.product_dosage,products.product_format,products.product_forme,marks.mark_name FROM products INNER JOIN marks on marks.mark_id=products.mark_id where products.product_id!=?`
     await Queries.myQuery({
       query: query,
-      whereCloseFields: `products.product_name!=?`,
       arguments: ["arg#$##$@#@#2s.id"],
     })
       .then((data) => {
@@ -90,7 +108,7 @@ static async getAll(callback) {
 }
 // SELECT SUB CATEGORIES
 static async getSubCategories(args, callback) {    
-    await Queries.myQuery({
+    await Queries.getAll({
     table: `sub_categories`,
     whereCloseFields: `sub_categorie_name like ?`,
     arguments: [`%${args.name}%`],
@@ -109,9 +127,8 @@ static async getSubCategories(args, callback) {
     });
 }
 // SELECT MARKS
-static async getMark(args, callback) {
-      
-    await Queries.myQuery({
+static async getMark(args, callback) {      
+    await Queries.getAll({
     table: `marks`,
     whereCloseFields: `mark_name like ?`,
     arguments: [`%${args.name}%`],
@@ -129,5 +146,44 @@ static async getMark(args, callback) {
         });
     });
 }
+
+static async update(args, callback){
+    Queries.getSpecificFields({
+      table: `${products}`,
+      fields: `${name}`,
+      whereCloseFields: `${args.name}=? and ${markId}=?`,
+      arguments: [args.name,args.markId],
+    }).then((data)=>{
+      if (data.length === 1 || data.length >= 1) {
+          callback({
+            type:"failure", message:"La marque avec le meme nom existe déjà"
+          })
+        } else {
+            Queries.update({
+                table: `${products}`,
+                fields: `${name},${id}`,
+                values:`?,?`,
+                arguments:[args.name,args.id]
+            }).then((data) =>                                       
+                callback({
+                type: "success",
+                message: "Modification effectuée"
+                })
+            ).catch((err) =>                              
+                callback({
+                type: "failure",
+                message:"Echec d'enregistrement",
+                err,
+                })
+            );
+        }}).catch((err) =>                              
+          callback({
+            type: "failure",
+            message:"Echec de recuperation du nom",
+            err,
+          })
+        );
+  }
+
 }
 export default Product;

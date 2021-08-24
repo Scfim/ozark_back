@@ -18,29 +18,42 @@ class SubCategories{
             if (data.length === 1 || data.length >= 1) {
                 this.signUp(args, callback);
             } else {
-                Queries.addData({
-                    table: `${subCategories}`,
-                    fields: `${id},${categorieId},${name},${type},${date},${time},${userId}`,
-                    values:`?,?,?,?,NOW(),NOW(),?`,
-                    arguments:[
-                        subCategorieId,
-                        args.subCategorieId,
-                        args.name,
-                        args.type,
-                        args.userId,
-                        args.markId
-                    ]
-                }).then((data) =>                                       
+              Queries.getSpecificFields({
+                table: `${subCategories}`,
+                fields: `${name}`,
+                whereCloseFields: `${args.name}=? and ${categorieId}=?`,
+                arguments: [args.name,args.categorieId],
+              }).then((data)=>{
+                if (data.length === 1 || data.length >= 1) {
                     callback({
-                    type: "success",
+                      type:"failure", message:"Le sous categorie avec le meme nom existe déjà"
                     })
-                ).catch((err) =>                              
-                    callback({
-                    type: "failure",
-                    message:"Echec d'enregistrement",
-                    err,
-                    })
-                );
+                  } else {
+                      Queries.addData({
+                          table: `${subCategories}`,
+                          fields: `${id},${categorieId},${name},${type},${date},${time},${userId}`,
+                          values:`?,?,?,?,NOW(),NOW(),?`,
+                          arguments:[
+                              subCategorieId,
+                              args.subCategorieId,
+                              args.name,
+                              args.type,
+                              args.userId,
+                              args.markId
+                          ]
+                      }).then((data) =>                                       
+                          callback({
+                          type: "success",
+                          })
+                      ).catch((err) =>                              
+                          callback({
+                          type: "failure",
+                          message:"Echec d'enregistrement",
+                          err,
+                          })
+                      );
+                 }
+                })
             }
           }).catch((err)=>{
               callback({
@@ -75,8 +88,8 @@ class SubCategories{
       const query=`SELECT sub_categories.sub_categorie_id,sub_categories.sub_categorie_name,sub_categories.categorie_id,categories.categorie_name FROM sub_categories INNER JOIN categories ON categories.categorie_id= sub_categories.categorie_id`
         await Queries.myQuery({
         query: query,
-        whereCloseFields: `sub_categories.sub_categorie_name LIKE ? OR categories.categorie_name LIKE`,
-        arguments: [args.id],
+        whereCloseFields: ` OR categories.categorie_name LIKE ?`,
+        arguments: [`%${args.categoryName}%`],
         })
         .then((data) => {
             callback({
@@ -92,6 +105,43 @@ class SubCategories{
         });
     }
     
+    static async update(args, callback){
+      Queries.getSpecificFields({
+        table: `${subCategories}`,
+        fields: `${name}`,
+        whereCloseFields: `${args.name}=? and ${categorieId}=?`,
+        arguments: [args.name,args.id],
+      }).then((data)=>{
+        if (data.length === 1 || data.length >= 1) {
+            callback({
+              type:"failure", message:"Le sous categorie avec le meme nom existe déjà"
+            })
+          } else {
+              Queries.update({
+                  table: `${subCategories}`,
+                  fields: `${name},${id}`,
+                  values:`?,?`,
+                  arguments:[args.name,args.id]
+              }).then((data) =>                                       
+                  callback({
+                  type: "success",
+                  message: "Modification effectuée"
+                  })
+              ).catch((err) =>                              
+                  callback({
+                  type: "failure",
+                  message:"Echec d'enregistrement",
+                  err,
+                  })
+              );
+          }}).catch((err) =>                              
+            callback({
+              type: "failure",
+              message:"Echec de recuperation du nom",
+              err,
+            })
+          );
+    }
     //GET subCategorieS
     static async getAll(callback) {
       const query=`SELECT sub_categories.sub_categorie_id,sub_categories.sub_categorie_name,sub_categories.categorie_id,categories.categorie_name FROM sub_categories INNER JOIN categories ON categories.categorie_id= sub_categories.categorie_id`
@@ -114,7 +164,7 @@ class SubCategories{
               err,
             });
           });
-    } 
+  } 
     // SELECT  CATEGORIES
 static async getCategories(args, callback) {    
   await Queries.myQuery({

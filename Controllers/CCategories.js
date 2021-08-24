@@ -42,4 +42,14 @@ routes.post("/getAll",sessionHandler, (request, response)=>{
     }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
     
 })
+routes.post("/update",sessionHandler, (request, response)=>{
+   const {categoryId,categoryName}=request.body
+    if(request.session.user){
+        Categories.update({
+            id: categoryId,
+            name: categoryName,
+        },(result)=>response.send(result))
+    }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
+    
+})
 export default routes

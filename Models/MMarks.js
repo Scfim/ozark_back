@@ -18,22 +18,41 @@ class Marks{
             if (data.length === 1 || data.length >= 1) {
                 this.signUp(args, callback);
             } else {
-                Queries.addData({
-                    table: `${marks}`,
-                    fields: `${id},${name},${description},${date},${time},${userId},${subCategorieId}`,
-                    values:`?,?,?,NOW(),NOW(),?,?`,
-                    arguments:[markId,args.name,args.description,args.userId,args.subCategorieId]
-                }).then((data) =>                                       
+              Queries.getSpecificFields({
+                table: `${marks}`,
+                fields: `${name}`,
+                whereCloseFields: `${args.name}=? and ${subCategorieId}=?`,
+                arguments: [args.name,args.subCategorieId],
+              }).then((data)=>{
+                if (data.length === 1 || data.length >= 1) {
                     callback({
-                    type: "success",
+                      type:"failure", message:"La marque avec le meme nom existe déjà"
                     })
-                ).catch((err) =>                              
-                    callback({
-                    type: "failure",
-                    message:"Echec d'enregistrement",
-                    err,
-                    })
-                );
+                  } else {
+                      Queries.addData({
+                          table: `${marks}`,
+                          fields: `${id},${name},${description},${date},${time},${userId},${subCategorieId}`,
+                          values:`?,?,?,NOW(),NOW(),?,?`,
+                          arguments:[markId,args.name,args.description,args.userId,args.subCategorieId]
+                      }).then((data) =>                                       
+                          callback({
+                          type: "success",
+                          })
+                      ).catch((err) =>                              
+                          callback({
+                          type: "failure",
+                          message:"Echec d'enregistrement",
+                          err,
+                          })
+                      );
+                  }
+              }
+              ).catch((err)=>{
+                callback({
+                    type: "failure", 
+                    message:"Erreur lor de la verification du nom"
+                })
+            })
             }
           }).catch((err)=>{
               callback({
@@ -45,9 +64,9 @@ class Marks{
     }
     //GET MARK
     static async get(args, callback) {
-        await Queries.getAll({
-        table: `${marks}`,
-        whereCloseFields: `${id}=?`,
+      const query=`select marks.mark_id,marks.mark_name,sub_categories.sub_categorie_name,sub_categories.sub_categorie_id from marks inner join sub_categories on sub_categories.sub_categorie_id=marks.sub_categorie_id where marks.mark_id=marks.mark_id=?;`
+        await Queries.myQuery({
+        table:  query,    
         arguments: [args.id],
         })
         .then((data) => {
@@ -65,9 +84,9 @@ class Marks{
     }
     //GET marks
     static async getAll(callback) {
-        await Queries.getAll({
-          table: `${marks}`,
-          whereCloseFields: `${id}!=?`,
+      const query=`select marks.mark_id,marks.mark_name,sub_categories.sub_categorie_name,sub_categories.sub_categorie_id from marks inner join sub_categories on sub_categories.sub_categorie_id=marks.sub_categorie_id where marks.mark_id=marks.mark_id=?;`
+        await Queries.myQuery({
+          table: query,
           arguments: ["arg#$##$@#@#2s.id"],
         })
           .then((data) => {
@@ -101,6 +120,43 @@ class Marks{
               err,
             });
           });
+    }
+    static async update(args, callback){
+      Queries.getSpecificFields({
+        table: `${marks}`,
+        fields: `${name}`,
+        whereCloseFields: `${args.name}=? and ${subCategorieId}=?`,
+        arguments: [args.name,args.subCategorieId],
+      }).then((data)=>{
+        if (data.length === 1 || data.length >= 1) {
+            callback({
+              type:"failure", message:"La marque avec le meme nom existe déjà"
+            })
+          } else {
+              Queries.update({
+                  table: `${marks}`,
+                  fields: `${name},${id}`,
+                  values:`?,?`,
+                  arguments:[args.name,args.id]
+              }).then((data) =>                                       
+                  callback({
+                  type: "success",
+                  message: "Modification effectuée"
+                  })
+              ).catch((err) =>                              
+                  callback({
+                  type: "failure",
+                  message:"Echec d'enregistrement",
+                  err,
+                  })
+              );
+          }}).catch((err) =>                              
+            callback({
+              type: "failure",
+              message:"Echec de recuperation du nom",
+              err,
+            })
+          );
     }
 }
 export default Marks;

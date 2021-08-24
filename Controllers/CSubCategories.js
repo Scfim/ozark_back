@@ -80,4 +80,15 @@ routes.post("/getAll", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
+routes.post("/update",sessionHandler, (request, response)=>{
+  const {categorieId,subBategoryId,subCategoryName}=request.body
+   if(request.session.user){
+    SubCategories.update({
+          categorieId:categorieId,
+          id: subBategoryId,
+          name: subCategoryName,
+       },(result)=>response.send(result))
+   }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
+   
+})
 export default routes;

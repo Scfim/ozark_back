@@ -5,7 +5,7 @@ import validator from "./Validator.js";
 import jwt from "jsonwebtoken"
 import sessionHandler from "../App/session.js"
 routes.post("/add",sessionHandler, (request, response)=>{
-    const  {name,description,}= request.body;
+    const  {name,description,subCategorieId}= request.body;
     if(request.session.user){
         const userId=request.session.user.data[0].user_id
         if(validator(name).isString().check()){
@@ -49,4 +49,15 @@ routes.post("/getSubCategory",sessionHandler, (request, response)=>{
      }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
      
  })
+ routes.post("/update",sessionHandler, (request, response)=>{
+    const {categorieId,markId,markName}=request.body
+     if(request.session.user){
+        Marks.update({
+            subCategorieId:categorieId,
+            id: markId,
+            name: markName,
+         },(result)=>response.send(result))
+     }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
+     
+  })
 export default routes
