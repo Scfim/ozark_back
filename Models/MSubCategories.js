@@ -52,7 +52,7 @@ class SubCategories{
     }
     //GET subCategorie
     static async get(args, callback) {
-      const query=`SELECT sub_categories.sub_categorie_id,sub_categories.sub_categorie_name,sub_categories.categorie_id,categories.categorie_name FROM sub_categories INNER JOIN categories ON categories.categorie_id= sub_categories.sub_categorie_id`
+      const query=`SELECT sub_categories.sub_categorie_id,sub_categories.sub_categorie_name,sub_categories.categorie_id,categories.categorie_name FROM sub_categories INNER JOIN categories ON categories.categorie_id= sub_categories.categorie_id`
         await Queries.myQuery({
         query: query,
         whereCloseFields: `sub_categories.sub_categorie_id=?`,
@@ -94,11 +94,11 @@ class SubCategories{
     
     //GET subCategorieS
     static async getAll(callback) {
-      const query=`SELECT sub_categories.sub_categorie_id,sub_categories.sub_categorie_name,sub_categories.categorie_id,categories.categorie_name FROM sub_categories INNER JOIN categories ON categories.categorie_id= sub_categories.sub_categorie_id`
+      const query=`SELECT sub_categories.sub_categorie_id,sub_categories.sub_categorie_name,sub_categories.categorie_id,categories.categorie_name FROM sub_categories INNER JOIN categories ON categories.categorie_id= sub_categories.categorie_id`
       await Queries.myQuery({
       query: query,
       whereCloseFields: `sub_categories.sub_categorie_id!=?`,
-      arguments: [`%${args.name}%`,`%${args.name}%`],
+      arguments: [`hkjhkgjh`],
       })
           .then((data) => {
             callback({
