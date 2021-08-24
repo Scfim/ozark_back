@@ -20,7 +20,7 @@ routes.post("/add",sessionHandler, (request, response)=>{
                     response.send(result);
                 
                 })
-            }else response.send({ type:"faillure",message:"la description doit être du type chaine des caractaire" });
+            }else response.send({ type:"failure",message:"la description doit être du type chaine des caractaire" });
         }else response.send({ type:"failure", message: "Le nom doit être du type chaine des caractaire" });
      }else response.send({ type:"failure", message: "Vous devez être connecté pour effectuer cette opération" });
     
@@ -40,4 +40,13 @@ routes.post("/getAll",sessionHandler, (request, response)=>{
     }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
     
 })
+routes.post("/getSubCategory",sessionHandler, (request, response)=>{
+    const subCategoryName=request.body.subCategoryName
+     if(request.session.user){
+         Marks.getSubCategory({
+            subCategoryName:subCategoryName,
+         },(result)=>response.send(result))
+     }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
+     
+ })
 export default routes

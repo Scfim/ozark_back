@@ -57,7 +57,7 @@ routes.post("/add",sessionHandler,async (request, response)=>{
                                             else{
                                                 verifyBooking=false;
                                                 response.send({ type:"failure", message: "Echec d'enregistrement de la commande numero "+dataBooking[i] });
-                                                break;
+                                                //break;
                                             }
                                         });
                                     }                                      
@@ -98,7 +98,7 @@ routes.post("/add",sessionHandler,async (request, response)=>{
                                                         },(resultOutput)=>{
                                                             if(resultOutput.data.type !== "success"){
                                                                 response.send({ type:"failure", message: "Echec d'enregistrement de la sortie numero "+data[i] });
-                                                                break;
+                                                               // break;
                                                             }
                                                             else{                                                               
                                                                 response.send(resultOutput)

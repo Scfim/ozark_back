@@ -25,17 +25,17 @@ routes.post("/add", sessionHandler, (request, response) => {
           );
         } else
           response.send({
-            type: "faillure",
+            type: "failure",
             message: "la date din doit être superieur a celui de debut",
           });
       } else
         response.send({
-          type: "faillure",
+          type: "failure",
           message: "la date de debut est invalide",
         });
     } else
       response.send({
-        type: "faillure",
+        type: "failure",
         message: "la date de fin est invalide",
       });
   } else
