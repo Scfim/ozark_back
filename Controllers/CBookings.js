@@ -103,6 +103,7 @@ routes.post("/add",sessionHandler,async (request, response)=>{
                                                             else{                                                               
                                                                 response.send(resultOutput)
                                                             }
+                                        
                                                         })
                                                 }
                                             }else response.send({ type:"failure", message: "Echec de recuperation de la commande" });

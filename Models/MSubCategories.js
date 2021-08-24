@@ -72,7 +72,7 @@ class SubCategories{
         });
     }
     static async getLike(args, callback) {
-      const query=`SELECT sub_categories.sub_categorie_id,sub_categories.sub_categorie_name,sub_categories.categorie_id,categories.categorie_name FROM sub_categories INNER JOIN categories ON categories.categorie_id= sub_categories.sub_categorie_id`
+      const query=`SELECT sub_categories.sub_categorie_id,sub_categories.sub_categorie_name,sub_categories.categorie_id,categories.categorie_name FROM sub_categories INNER JOIN categories ON categories.categorie_id= sub_categories.categorie_id`
         await Queries.myQuery({
         query: query,
         whereCloseFields: `sub_categories.sub_categorie_name LIKE ? OR categories.categorie_name LIKE`,
@@ -98,7 +98,9 @@ class SubCategories{
       await Queries.myQuery({
       query: query,
       whereCloseFields: `sub_categories.sub_categorie_id!=?`,
+
       arguments: [`hkjhkgjh`],
+
       })
           .then((data) => {
             callback({

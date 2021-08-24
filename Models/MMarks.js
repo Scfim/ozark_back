@@ -43,7 +43,7 @@ class Marks{
           });
           
     }
-    //GET CATEGORIE
+    //GET MARK
     static async get(args, callback) {
         await Queries.getAll({
         table: `${marks}`,
@@ -69,6 +69,25 @@ class Marks{
           table: `${marks}`,
           whereCloseFields: `${id}!=?`,
           arguments: ["arg#$##$@#@#2s.id"],
+        })
+          .then((data) => {
+            callback({
+              type: "success",
+              data,
+            });
+          })
+          .catch((err) => {
+            callback({
+              type: "failure",
+              err,
+            });
+          });
+    }
+    static async getSubCategory(args,callback) {
+      const query=`SELECT * FROM sub_categories WHERE sub_categorie_name like ?`
+        await Queries.myQuery({
+          query:query,
+          arguments: [`%${args.subCategoryName}%`],
         })
           .then((data) => {
             callback({
