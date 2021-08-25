@@ -86,7 +86,7 @@ class Marks{
     static async getAll(callback) {
       const query=`select marks.mark_id,marks.mark_name,sub_categories.sub_categorie_name,sub_categories.sub_categorie_id from marks inner join sub_categories on sub_categories.sub_categorie_id=marks.sub_categorie_id where marks.mark_id!=?;`
         await Queries.myQuery({
-          table: query,
+          query: query,
           arguments: ["arg#$##$@#@#2s.id"],
         })
           .then((data) => {
