@@ -3,13 +3,14 @@ import Input from "../Models/MInputs.js";
 const routes = express.Router();
 import validator from "./Validator.js";
 import sessionHandler from "../App/session.js";
+import Exercise from "../Models/MExercises.js"
 routes.post('/add', sessionHandler, (request, response)=>{
-    const{productId,providerId,quantity,unitePrice,dateRecord,timeRecord,comment} = responserequest.body
+    const{productId,providerId,quantity,unitePrice,dateRecord,timeRecord,comment} = request.body
     if(request.session.user){
         const userId=request.session.user.data[0].user_id        
-        Exercise.getCourent((resultExercise)=>{
-            if(resultExercise.data.type === "success" && resultExercise.data.data.length>0){            
-                const exerciseId= resultExercise.data.data.exercise_id
+        Exercise.getCurrent((resultExercise)=>{
+            if(resultExercise.type === "success" && resultExercise.data.length>0){            
+                const exerciseId= resultExercise.data.exercise_id
                 if(exerciseId!==null&&exerciseId!==""&&exerciseId!==undefined){
                     Input.insert({
                         productId:productId,

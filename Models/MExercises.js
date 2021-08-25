@@ -83,7 +83,7 @@ static async get(args, callback) {
         });
     });
 }
-static async getCourent(callback) {
+static async getCurrent(callback) {
     await Queries.getAll({
     table: `${exercises}`,
     whereCloseFields: `${status}=?`,

@@ -1,5 +1,5 @@
 -- CREATE DATABASE
-DROP database ozark;
+DROP database if EXISTS ozark;
 CREATE DATABASE IF NOT EXISTS ozark;
 USE ozark;
 

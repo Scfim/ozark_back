@@ -15,14 +15,14 @@ routes.post("/add",sessionHandler,async (request, response)=>{
     var verifyBooking=false;
     if(request.session.user){
         const userId=request.session.user.data[0].user_id        
-        Exercise.getCourent((resultExercise)=>{
-            if(resultExercise.data.type === "success" && resultExercise.data.data.length>0){            
-                const exerciseId= resultExercise.data.data.exercise_id
+        Exercise.getCurrent((resultExercise)=>{
+            if(resultExercise.type === "success" && resultExercise.data.length>0){            
+                const exerciseId= resultExercise.data[0].exercise_id
                 if(exerciseId!==null&&exerciseId!==""&&exerciseId!==undefined){
                     Reference.getCount((resultRefe)=>{
-                        if(resultRefe.data.type === "success" && resultRefe.data.data.length>0){
-                            if(resultRefe.data.data.booking_reference_number!==null&&resultRefe.data.data.booking_reference_number!==""&&resultRefe.data.data.booking_reference_number!==undefined){
-                            const refNumber=resultRefe.data.data.booking_reference_number+1
+                        if(resultRefe.type === "success" && resultRefe.data.length>0){
+                            if(resultRefe.data[0].booking_reference_number!==null&&resultRefe.data[0].booking_reference_number!==""&&resultRefe.data[0].booking_reference_number!==undefined){
+                            const refNumber=resultRefe.data[0].booking_reference_number+1
                             Reference.insert({
                                 number:refNumber,  
                                 date:dateRecord,
@@ -31,7 +31,7 @@ routes.post("/add",sessionHandler,async (request, response)=>{
                                 userId:userId,
                             },(resultReference)=>{
                                 referenceId=resultReference.data.id
-                                if(resultReference.data.type === "success"){
+                                if(resultReference.type === "success"){
                                     for(var i=0;i<dataBooking.length;i++) {
                                         Booking.insert(
                                         {
@@ -46,7 +46,7 @@ routes.post("/add",sessionHandler,async (request, response)=>{
                                             timeRecord:timeRecord,
                                             userId:userId,
                                         },(resultBooking)=>{
-                                            if(resultBooking.data.type === "success"){
+                                            if(resultBooking.type === "success"){
                                                 if(paymentCheck.check===true ||outputCheck===true){
                                                    verifyBooking=true; 
                                                 }else{
@@ -80,8 +80,8 @@ routes.post("/add",sessionHandler,async (request, response)=>{
                                         Booking.get({
                                             reference:referenceId
                                         },(resultBooking)=>{
-                                            if(resultBooking.data.type==="success"){
-                                                const data=resultBooking.data.data.length;
+                                            if(resultBooking.type==="success"){
+                                                const data=resultBooking.data;
                                                 for(var i=0; i <data ; i++){
                                                         Ouptut.insert({
                                                             bookingId:data[i].booking_id,
@@ -96,7 +96,7 @@ routes.post("/add",sessionHandler,async (request, response)=>{
                                                             envoy:envoy,
                                                             userId:userId
                                                         },(resultOutput)=>{
-                                                            if(resultOutput.data.type !== "success"){
+                                                            if(resultOutput.type !== "success"){
                                                                 response.send({ type:"failure", message: "Echec d'enregistrement de la sortie numero "+data[i] });
                                                                 return;
                                                             }

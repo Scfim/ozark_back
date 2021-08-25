@@ -7,9 +7,9 @@ import sessionHandler from "../App/session.js"
 routes.post("/add",sessionHandler,(request, response)=>{
     if(request.session.user){
         const userId=request.session.user.data[0].user_id        
-        Exercise.getCourent((resultExercise)=>{
-            if(resultExercise.data.type === "success" && resultExercise.data.data.length>0){            
-                const exerciseId= resultExercise.data.data.exercise_id
+        Exercise.getCurrent((resultExercise)=>{
+            if(resultExercise.type === "success" && resultExercise.data.length>0){            
+                const exerciseId= resultExercise.data[0].exercise_id
                 if(exerciseId!==null&&exerciseId!==""&&exerciseId!==undefined){
                     Payement.insert({
                         referenceId:referenceId,
