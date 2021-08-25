@@ -20,16 +20,14 @@ static async insert(args,callback) {
           } else {
                 Queries.addData({
                     table: `${input}`,
-                    fields: `${id},${productId},${providerId},${quantity},${unitePrice},${lot},${expireDate},${exerciseId},${dateRecord},${timeRecord},${comment},${date},${time},${userId},`,
-                    values:`?,?,?,?,?,?,?,?,?,?,?,NOW(),NOW(),?`,
+                    fields: `${id},${productId},${providerId},${quantity},${unitePrice},${exerciseId},${dateRecord},${timeRecord},${comment},${date},${time},${userId},`,
+                    values:`?,?,?,?,?,?,,?,?,?,NOW(),NOW(),?`,
                     arguments:[
                         inputId,
                         args.productId,
                         args.providerId,
                         args.quantity,
-                        args.unitePrice,
-                        args.lot,
-                        args.expireDate,
+                        args.unitePrice,                       
                         args.exerciseId,
                         args.dateRecord,
                         args.timeRecord,
