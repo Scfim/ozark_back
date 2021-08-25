@@ -105,5 +105,45 @@ static async delete(args, callback) {
       });
   });
 }
+static async update(args,callback) {
+  var { field, value, clientId } = args,callback;
+  switch (field) {
+    case "clientName":
+      field = name;
+      break;
+    case "clientAdress":
+      field = adress;
+      break;
+    case "clientPhone":
+      field = phone;
+      break;
+    case "clientMail":
+      field = mail;        
+      break;
+    default:
+      break;
+  }
+ 
+  await Queries.updateData({
+    table: clients,
+    fields: `${field} = ?`,
+    whereCloseFields: `${id} = ?`,
+    arguments: [value, clientId],
+  }).then((data) =>
+  callback({
+    type: "success",
+    data,
+    message:"Modification effectuée"
+  })
+  )
+  .catch((err) =>
+    callback({
+      type: "failure",
+      err,
+      message:"Echec dde modification"
+    })
+  );    
+  
+}
 }
 export default  Client

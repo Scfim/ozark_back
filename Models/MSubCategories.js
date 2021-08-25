@@ -35,7 +35,7 @@ class SubCategories{
                           values:`?,?,?,?,NOW(),NOW(),?`,
                           arguments:[
                               subCategorieId,
-                              args.subCategorieId,
+                              args.categorieId,
                               args.name,
                               args.type,
                               args.userId,
@@ -167,7 +167,7 @@ class SubCategories{
   } 
     // SELECT  CATEGORIES
 static async getCategories(args, callback) {    
-  await Queries.myQuery({
+  await Queries.getAll({
   table: `categories`,
   whereCloseFields: `categorie_name like ?`,
   arguments: [`%${args.name}%`],

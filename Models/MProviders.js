@@ -105,5 +105,45 @@ static async delete(args, callback) {
       });
   });
 }
+static async update(args,callback) {
+  var { field, value, providerId } = args,callback;
+  switch (field) {
+    case "providerName":
+      field = name;
+      break;
+    case "providerAdress":
+      field = adress;
+      break;
+    case "providerPhone":
+      field = phone;
+      break;
+    case "providerMail":
+      field = mail;        
+      break;
+    default:
+      break;
+  }
+ 
+  await Queries.updateData({
+    table: providers,
+    fields: `${field} = ?`,
+    whereCloseFields: `${id} = ?`,
+    arguments: [value, providerId],
+  }).then((data) =>
+  callback({
+    type: "success",
+    data,
+    message:"Modification effectuée"
+  })
+  )
+  .catch((err) =>
+    callback({
+      type: "failure",
+      err,
+      message:"Echec dde modification"
+    })
+  );    
+  
+}
 }
 export default  Provider

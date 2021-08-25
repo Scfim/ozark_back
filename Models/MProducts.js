@@ -109,7 +109,7 @@ static async delete(args, callback) {
 }
 //GET products
 static async getAll(callback) {
-   const query=`SELECT products.product_name,products.product_alert_stock,products.product_dosage,products.product_format,products.product_forme,marks.mark_name FROM products INNER JOIN marks on marks.mark_id=products.mark_id where products.product_id!=?`
+   const query=`SELECT products.product_id,products.product_name,products.product_alert_stock,products.product_dosage,products.product_format,products.product_forme,marks.mark_name FROM products INNER JOIN marks on marks.mark_id=products.mark_id where products.product_id!=?`
     await Queries.myQuery({
       query: query,
       arguments: ["arg#$##$@#@#2s.id"],

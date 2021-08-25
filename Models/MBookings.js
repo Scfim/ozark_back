@@ -32,9 +32,7 @@ static async insert(args,callback) {
                         args.clientId,
                         args.quantity,
                         args.unitePrice,
-
                         args.reference,
-
                         args.description,
                         args.exerciseId,
                         args.dateRecord,

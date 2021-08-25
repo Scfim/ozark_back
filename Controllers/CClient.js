@@ -5,7 +5,7 @@ import validator from "./Validator.js";
 import sessionHandler from "../App/session.js";
 routes.post("/add", sessionHandler, (request, response) => {
   const { name, type, adress, phone, mail } = request.body;
-  if (request.session.user) {
+  if (request.session.Clients) {
     const userId = request.session.user.data[0].user_id;
     if (validator(name).isString().check()) {
       if (validator(adress).isString().check) {
@@ -78,5 +78,51 @@ routes.post("/getAll", sessionHandler, (request, response) => {
       type: "failure",
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
+});
+routes.post("/update",sessionHandler, (request, response) => {
+  const { field, value,clientId } = request.body;
+  if(request.session.user){    
+    if(validator(clientId).isString().check()===true){
+      if(validator(field).isString().check()===true){
+        if(validator(value).isString().check()===true){
+          if(field==="clientMail" ){
+            if(validator(value).isEmailAddress().check()===true){
+              Clients.update({
+                field: field,
+                value: value,
+                clientId: clientId
+              },
+              (result) => {
+                response.send(result);
+              })
+            }else response.send({type: "failure", message: `Adress invalide`});
+            
+          }
+          else if(field==="clientPhone"){
+            if( validator(value).isPhoneNumber().check()===true){
+              Clients.update({
+                field: field,
+                value: value,
+                clientId: clientId
+              },
+              (result) => {
+                response.send(result);
+              })
+            }else response.send({type: "failure", message: `Le numéro est invalide`});
+          }else{
+            Clients.update({
+              field: field,
+              value: value,
+              clientId: clientId
+            },
+            (result) => {
+              response.send(result);
+            })
+          }
+          
+        }else response.send({type: "failure", message: `Aucune valeur n'a été donnée!`});
+      }else response.send({type: "failure", message: `Veillez specifier l'élement a modifier !`});
+    }else response.send({type: "failure", message: `L'identifiant du client doit etre de ty texte !`});
+  }else response.send({ type: "failure",message:"Vous devez être connecté pour effectuer cette opération" });
 });
 export default routes;

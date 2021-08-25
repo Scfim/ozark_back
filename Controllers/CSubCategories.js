@@ -71,7 +71,7 @@ routes.post("/delete", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/geCategories", sessionHandler, (request, response) => {
+routes.post("/getCategories", sessionHandler, (request, response) => {
   const categorieName = request.body.categorieName;
   if (request.session.user) {
     SubCategories.getCategories(
