@@ -21,7 +21,7 @@ class SubCategories{
               Queries.getSpecificFields({
                 table: `${subCategories}`,
                 fields: `${name}`,
-                whereCloseFields: `${args.name}=? and ${categorieId}=?`,
+                whereCloseFields: `${name}=? and ${categorieId}=?`,
                 arguments: [args.name,args.categorieId],
               }).then((data)=>{
                 if (data.length === 1 || data.length >= 1) {
@@ -109,7 +109,7 @@ class SubCategories{
       Queries.getSpecificFields({
         table: `${subCategories}`,
         fields: `${name}`,
-        whereCloseFields: `${args.name}=? and ${categorieId}=?`,
+        whereCloseFields: `${name}=? and ${categorieId}=?`,
         arguments: [args.name,args.id],
       }).then((data)=>{
         if (data.length === 1 || data.length >= 1) {
@@ -181,6 +181,26 @@ static async getCategories(args, callback) {
   .catch((err) => {
       callback({
       type: "failure",
+      err,
+      });
+  });
+}
+static async delete(args, callback) {
+  await Queries.removeData({
+  table: `${subCategories}`,
+  whereCloseFields: `${id}=?`,
+  arguments: [args.id],
+  })
+  .then((data) => {
+      callback({
+      type: "success",
+      data,
+      });
+  })
+  .catch((err) => {
+      callback({
+      type: "failure",
+      message: "Echec de supression veillez vous rassurez que le sous categorie n'est lié avec une marque",
       err,
       });
   });

@@ -34,6 +34,15 @@ routes.post("/getOne",sessionHandler, (request, response)=>{
     }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
     
 })
+routes.post("/delete",sessionHandler, (request, response)=>{
+   const markId=request.body.markId
+    if(request.session.user){
+        Marks.delete({
+            id:markId,
+        },(result)=>response.send(result))
+    }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
+    
+})
 routes.post("/getAll",sessionHandler, (request, response)=>{   
     if(request.session.user){
         Marks.getAll((result)=>response.send(result))

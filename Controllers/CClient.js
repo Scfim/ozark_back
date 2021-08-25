@@ -55,6 +55,21 @@ routes.post("/getOne", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
+routes.post("/delete", sessionHandler, (request, response) => {
+  const clientId = request.body.clientId;
+  if (request.session.user) {
+    Clients.delete(
+      {
+        id: clientId,
+      },
+      (result) => response.send(result)
+    );
+  } else
+    response.send({
+      type: "failure",
+      message: "Vous devez être connecté pour éffectuer cette opération",
+    });
+});
 routes.post("/getAll", sessionHandler, (request, response) => {
   if (request.session.user) {
     Clients.getAll((result) => response.send(result));

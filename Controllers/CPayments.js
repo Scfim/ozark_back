@@ -3,6 +3,7 @@ const routes = express.Router();
 import validator from "./Validator.js";
 import Exercise from "../Models/MExercises.js"
 import Payement from "../Models/MPayments.js"
+import sessionHandler from "../App/session.js"
 routes.post("/add",sessionHandler,(request, response)=>{
     if(request.session.user){
         const userId=request.session.user.data[0].user_id        

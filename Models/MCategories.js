@@ -22,7 +22,7 @@ class Categories{
                 Queries.getSpecificFields({
                   table: `${categories}`,
                   fields: `${name}`,
-                  whereCloseFields: `${args.name}=?`,
+                  whereCloseFields: `${name}=?`,
                   arguments: [args.name],
                 }).then((data)=>{
                   if (data.length === 1 || data.length >= 1) {
@@ -66,7 +66,7 @@ class Categories{
       Queries.getSpecificFields({
         table: `${categories}`,
         fields: `${name}`,
-        whereCloseFields: `${args.name}=?`,
+        whereCloseFields: `${name}=?`,
         arguments: [args.name],
       }).then((data)=>{
         if (data.length === 1 || data.length >= 1) {
@@ -139,6 +139,26 @@ class Categories{
             });
           });
     }
+    static async delete(args, callback) {
+      await Queries.removeData({
+      table: `${categories}`,
+      whereCloseFields: `${id}=?`,
+      arguments: [args.id],
+      })
+      .then((data) => {
+          callback({
+          type: "success",
+          data,
+          });
+      })
+      .catch((err) => {
+          callback({
+          type: "failure",
+          message: "Echec de suppression veillez vous rassurez que la categorie  n'a de relation avec le sous categorie",
+          err,
+          });
+      });
+  }
 }
 export default Categories;
 

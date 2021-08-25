@@ -56,6 +56,21 @@ routes.post("/getOne", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
+routes.post("/delete", sessionHandler, (request, response) => {
+  const subCategorieId = request.body.subCategorieId;
+  if (request.session.user) {
+    SubCategories.delete(
+      {
+        id: subCategorieId,
+      },
+      (result) => response.send(result)
+    );
+  } else
+    response.send({
+      type: "failure",
+      message: "Vous devez être connecté pour éffectuer cette opération",
+    });
+});
 routes.post("/geCategories", sessionHandler, (request, response) => {
   const categorieName = request.body.categorieName;
   if (request.session.user) {

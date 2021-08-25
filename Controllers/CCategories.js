@@ -34,6 +34,15 @@ routes.post("/getOne",sessionHandler, (request, response)=>{
     }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
     
 })
+routes.post("/delete",sessionHandler, (request, response)=>{
+   const categorieId=request.body.categorieid
+    if(request.session.user){
+        Categories.delete({
+            id:categorieId,
+        },(result)=>response.send(result))
+    }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
+    
+})
 
 routes.post("/getAll",sessionHandler, (request, response)=>{
    const categorieid=request.body.categorieid

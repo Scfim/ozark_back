@@ -85,5 +85,25 @@ static async getAll(callback) {
         });
       });
 }
+static async delete(args, callback) {
+  await Queries.removeData({
+  table: `${clients}`,
+  whereCloseFields: `${id}=?`,
+  arguments: [args.id],
+  })
+  .then((data) => {
+      callback({
+      type: "success",
+      data,
+      });
+  })
+  .catch((err) => {
+      callback({
+      type: "failure",
+      message: "Echec de suppression veillez vous rassurez que le client n'a de lié avec d'autres opération",
+      err,
+      });
+  });
+}
 }
 export default  Client

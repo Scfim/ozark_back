@@ -189,8 +189,11 @@ class User {
   static async update(args,callback) {
     var { field, value, userId } = args,callback;
     switch (field) {
-      case "userName":
+      case "userFirstName":
         field = name;
+        break;
+      case "userLastName":
+        field = lastName;
         break;
       case "userPhone":
         field = phoneNumber;
@@ -268,6 +271,30 @@ class User {
       );
     }    
     
+  }
+  // update password 
+  static async updatePassword(args, callback) {
+    const pwd = crypto.createHash("sha256").update(args.password).digest("hex");
+    await Queries.updateData({
+      table: `${users}`,
+      fields: `${password} = ?`,
+      whereCloseFields: `${id} = ?`,
+      arguments: [pwd, args.userId],
+    })
+      .then((data) =>
+        callback({
+          type: "success",
+          data,
+          message:"Inscription effectuée"
+        })
+      )
+      .catch((err) =>
+        callback({
+          type: "failure",
+          message: "Echec de modification",
+          err,
+        })
+      );
   }
 }
 export default User;

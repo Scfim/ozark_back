@@ -22,7 +22,7 @@ static async insert(args,callback) {
             Queries.getSpecificFields({
                 table: `${products}`,
                 fields: `${name}`,
-                whereCloseFields: `${args.name}=? and ${markId}=?`,
+                whereCloseFields: `${name}=? and ${markId}=?`,
                 arguments: [args.name,args.markId],
               }).then((data)=>{
                 if (data.length === 1 || data.length >= 1) {
@@ -86,9 +86,30 @@ static async get(args, callback) {
         });
     });
 }
+
+static async delete(args, callback) {
+    await Queries.removeData({
+    table: `${products}`,
+    whereCloseFields: `${id}=?`,
+    arguments: [args.id],
+    })
+    .then((data) => {
+        callback({
+        type: "success",
+        data,
+        });
+    })
+    .catch((err) => {
+        callback({
+        type: "failure",
+        message: "Echec de suppression veillez vous rassurez que le produit n'est lié avec d'autres opération",
+        err,
+        });
+    });
+}
 //GET products
 static async getAll(callback) {
-    query=`SELECT products.product_name,products.product_alert_stock,products.product_dosage,products.product_format,products.product_forme,marks.mark_name FROM products INNER JOIN marks on marks.mark_id=products.mark_id where products.product_id!=?`
+   const query=`SELECT products.product_name,products.product_alert_stock,products.product_dosage,products.product_format,products.product_forme,marks.mark_name FROM products INNER JOIN marks on marks.mark_id=products.mark_id where products.product_id!=?`
     await Queries.myQuery({
       query: query,
       arguments: ["arg#$##$@#@#2s.id"],
@@ -151,7 +172,7 @@ static async update(args, callback){
     Queries.getSpecificFields({
       table: `${products}`,
       fields: `${name}`,
-      whereCloseFields: `${args.name}=? and ${markId}=?`,
+      whereCloseFields: `${name}=? and ${markId}=?`,
       arguments: [args.name,args.markId],
     }).then((data)=>{
       if (data.length === 1 || data.length >= 1) {

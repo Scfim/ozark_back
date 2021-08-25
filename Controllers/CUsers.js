@@ -146,7 +146,6 @@ routes.post("/login", sessionHandler, (request, response) => {
       response.send({ type: "failure", message: `Identifiants incorrect` });
   } else response.send({ type: "failure", message: `Identifiants incorrect` });
 });
-
 routes.get("/login", sessionHandler, (request, response) => {
   console.log(request.session.user,request.session)
   if (request.session.user) {
@@ -175,7 +174,73 @@ const jwtVerify = (req, res, next) => {
 routes.get("/auth", jwtVerify, (request, response, next) => {
   response.send({ auth: true });
 });
-routes.get("/getTest", sessionHandler, (req,res)=>{
-  res.send(req.session.user)
-})
+routes.post("/update",sessionHandler, (request, response) => {
+  const { field, value } = request.body;
+  if(request.session.user){
+    const userId=request.session.user.data[0].user_id
+    if(validator(userId).isString().check()===true){
+      if(validator(field).isString().check()===true){
+        if(validator(value).isString().check()===true){
+          if(field==="userMail" ){
+            if(validator(value).isEmailAddress().check()===true){
+              User.update({
+                field: field,
+                value: value,
+                userId: userId
+              },
+              (result) => {
+                response.send(result);
+              })
+            }else response.send({type: "failure", message: `Adress invalide`});
+            
+          }
+          else if(field==="userPhone"){
+            if( validator(value).isPhoneNumber().check()===true){
+              User.update({
+                field: field,
+                value: value,
+                userId: userId
+              },
+              (result) => {
+                response.send(result);
+              })
+            }else response.send({type: "failure", message: `Le numéro est invalide`});
+          }else{
+            User.update({
+              field: field,
+              value: value,
+              userId: userId
+            },
+            (result) => {
+              response.send(result);
+            })
+          }
+          
+        }else response.send({type: "failure", message: `Aucune valeur n'a été donnée!`});
+      }else response.send({type: "failure", message: `Veillez specifier l'élement a modifier !`});
+    }else response.send({type: "failure", message: `Vous devez être connecté pour effectuer cette opération !`});
+  }else response.send({ type: "failure",message:"Vous devez être connecté pour effectuer cette opération" });
+});
+routes.post("/updatePassword", sessionHandler, (request, response) => {
+  const { password, oldePassword } = request.body;
+  if(request.session.user){
+    const userId=request.session.user.data[0].user_id
+    var oldePasswordFromDb;
+    const pwd = crypto.createHash("sha256").update(oldePassword).digest("hex");
+    if (validator(password).isString().check === true) {
+      if (pwd === oldePasswordFromDb) {
+        User.updatePassword(
+          {
+            password: password,
+            userId: userId,
+          },
+          (result) => {
+            response.send(result);
+           
+          }
+        );
+      } else response.json({type:"failure", message: `Mot de passe invalide` });
+    } else response.json({ type:"failure", message: `Mot de passe invalide` });
+}else response.send({ type: "failure",message:"Vous devez être connecté pour effectuer cette opération" });
+});
 export default routes;

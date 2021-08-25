@@ -54,6 +54,21 @@ routes.post("/getOne", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
+routes.post("/delete", sessionHandler, (request, response) => {
+  const productId = request.body.productId;
+  if (request.session.user) {
+    Products.delete(
+      {
+        id: productId,
+      },
+      (result) => response.send(result)
+    );
+  } else
+    response.send({
+      type: "failure",
+      message: "Vous devez être connecté pour éffectuer cette opération",
+    });
+});
 routes.post("/getSubCateries", sessionHandler, (request, response) => {
   const subCategorieName = request.body.subCategorieName;
   if (request.session.user) {

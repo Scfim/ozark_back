@@ -21,7 +21,7 @@ class Marks{
               Queries.getSpecificFields({
                 table: `${marks}`,
                 fields: `${name}`,
-                whereCloseFields: `${args.name}=? and ${subCategorieId}=?`,
+                whereCloseFields: `${name}=? and ${subCategorieId}=?`,
                 arguments: [args.name,args.subCategorieId],
               }).then((data)=>{
                 if (data.length === 1 || data.length >= 1) {
@@ -64,7 +64,7 @@ class Marks{
     }
     //GET MARK
     static async get(args, callback) {
-      const query=`select marks.mark_id,marks.mark_name,sub_categories.sub_categorie_name,sub_categories.sub_categorie_id from marks inner join sub_categories on sub_categories.sub_categorie_id=marks.sub_categorie_id where marks.mark_id=marks.mark_id=?;`
+      const query=`select marks.mark_id,marks.mark_name,sub_categories.sub_categorie_name,sub_categories.sub_categorie_id from marks inner join sub_categories on sub_categories.sub_categorie_id=marks.sub_categorie_id where marks.mark_id=?;`
         await Queries.myQuery({
         table:  query,    
         arguments: [args.id],
@@ -84,7 +84,7 @@ class Marks{
     }
     //GET marks
     static async getAll(callback) {
-      const query=`select marks.mark_id,marks.mark_name,sub_categories.sub_categorie_name,sub_categories.sub_categorie_id from marks inner join sub_categories on sub_categories.sub_categorie_id=marks.sub_categorie_id where marks.mark_id=marks.mark_id=?;`
+      const query=`select marks.mark_id,marks.mark_name,sub_categories.sub_categorie_name,sub_categories.sub_categorie_id from marks inner join sub_categories on sub_categories.sub_categorie_id=marks.sub_categorie_id where marks.mark_id!=?;`
         await Queries.myQuery({
           table: query,
           arguments: ["arg#$##$@#@#2s.id"],
@@ -125,7 +125,7 @@ class Marks{
       Queries.getSpecificFields({
         table: `${marks}`,
         fields: `${name}`,
-        whereCloseFields: `${args.name}=? and ${subCategorieId}=?`,
+        whereCloseFields: `${name}=? and ${subCategorieId}=?`,
         arguments: [args.name,args.subCategorieId],
       }).then((data)=>{
         if (data.length === 1 || data.length >= 1) {
@@ -158,5 +158,25 @@ class Marks{
             })
           );
     }
+    static async delete(args, callback) {
+      await Queries.removeData({
+      table: `${marks}`,
+      whereCloseFields: `${id}=?`,
+      arguments: [args.id],
+      })
+      .then((data) => {
+          callback({
+          type: "success",
+          data,
+          });
+      })
+      .catch((err) => {
+          callback({
+          type: "failure",
+          message: "Echec de suppression veillez vous rassurez que la marque n'est lié avec des produits",
+          err,
+          });
+      });
+  }
 }
 export default Marks;
