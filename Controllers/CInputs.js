@@ -47,11 +47,38 @@ routes.post("/add", sessionHandler, (request, response) => {
           type: "failure",
           message: "Echec de recuperation de l'exercice",
         });
-    });
-  } else
-    response.send({
-      type: "failure",
-      message: "Vous devez être connecté pour éffectuer cette opération",
-    });
+    })
+    }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
+})
+routes.post("/getProvider", sessionHandler, (request, response) => {
+    const providerName = request.body.providerName;
+    if (request.session.user) {
+      Input.getProvider(
+        {
+            providerName: providerName,
+        },
+        (result) => response.send(result)
+      );
+    } else
+      response.send({
+        type: "failure",
+        message: "Vous devez être connecté pour éffectuer cette opération",
+      });
 });
-export default routes;
+routes.post("/getProduct", sessionHandler, (request, response) => {
+    const productName = request.body.productName;
+    if (request.session.user) {
+      Input.getProduct(
+        {
+            productName: productName,
+        },
+        (result) => response.send(result)
+      );
+    } else
+      response.send({
+        type: "failure",
+        message: "Vous devez être connecté pour éffectuer cette opération",
+      });
+});
+export default routes
+

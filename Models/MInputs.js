@@ -68,6 +68,44 @@ static async get(args, callback) {
         });
     });
 }
+static async getProvider(args, callback) {
+    await Queries.getAll({
+    table: `providers`,
+    whereCloseFields: `provider_name like?`,
+    arguments: [`%${args.providerName}%`],
+    })
+    .then((data) => {
+        callback({
+        type: "success",
+        data,
+        });
+    })
+    .catch((err) => {
+        callback({
+        type: "failure",
+        err,
+        });
+    });
+}
+static async getProduct(args, callback) {
+    await Queries.getAll({
+    table: `products`,
+    whereCloseFields: `product_name like ?`,
+    arguments: [`%${args.providerName}%`],
+    })
+    .then((data) => {
+        callback({
+        type: "success",
+        data,
+        });
+    })
+    .catch((err) => {
+        callback({
+        type: "failure",
+        err,
+        });
+    });
+}
 //GET input
 static async getAll(callback) {
     await Queries.getAll({
