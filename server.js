@@ -52,6 +52,6 @@ app.use('/clients',clientRouter)
 app.use('/bookings',bookingRouter)
 app.use('/output',outputRouter)
 app.use('/payments',paymentRouter)
-app.use('/Input',inputRouter)
+app.use('/input',inputRouter)
 const PORT = process.env.PORT || 2723;
 app.listen(PORT, () => console.log(`Server start on port ${PORT}`));

@@ -147,7 +147,6 @@ routes.post("/login", sessionHandler, (request, response) => {
   } else response.send({ type: "failure", message: `Identifiants incorrect` });
 });
 routes.get("/login", sessionHandler, (request, response) => {
-  console.log(request.session.user,request.session)
   if (request.session.user) {
     delete request.session.user.data[0].user_password;
     response.send({ authenticated: true, user: request.session.user });

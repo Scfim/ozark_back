@@ -79,50 +79,74 @@ routes.post("/delete", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/update",sessionHandler, (request, response) => {
-  const { field, value,providerId } = request.body;
-  if(request.session.user){    
-    if(validator(providerId).isString().check()===true){
-      if(validator(field).isString().check()===true){
-        if(validator(value).isString().check()===true){
-          if(field==="clientMail" ){
-            if(validator(value).isEmailAddress().check()===true){
-              Providers.update({
+routes.post("/update", sessionHandler, (request, response) => {
+  const { field, value, providerId } = request.body;
+  if (request.session.user) {
+    if (validator(providerId).isString().check() === true) {
+      if (validator(field).isString().check() === true) {
+        if (validator(value).isString().check() === true) {
+          if (field === "clientMail") {
+            if (validator(value).isEmailAddress().check() === true) {
+              Providers.update(
+                {
+                  field: field,
+                  value: value,
+                  providerId: providerId,
+                },
+                (result) => {
+                  response.send(result);
+                }
+              );
+            } else
+              response.send({ type: "failure", message: `Adress invalide` });
+          } else if (field === "clientPhone") {
+            if (validator(value).isPhoneNumber().check() === true) {
+              Providers.update(
+                {
+                  field: field,
+                  value: value,
+                  providerId: providerId,
+                },
+                (result) => {
+                  response.send(result);
+                }
+              );
+            } else
+              response.send({
+                type: "failure",
+                message: `Le numéro est invalide`,
+              });
+          } else {
+            Providers.update(
+              {
                 field: field,
                 value: value,
-                providerId: providerId
+                providerId: providerId,
               },
               (result) => {
                 response.send(result);
-              })
-            }else response.send({type: "failure", message: `Adress invalide`});
-            
+              }
+            );
           }
-          else if(field==="clientPhone"){
-            if( validator(value).isPhoneNumber().check()===true){
-              Providers.update({
-                field: field,
-                value: value,
-                providerId: providerId
-              },
-              (result) => {
-                response.send(result);
-              })
-            }else response.send({type: "failure", message: `Le numéro est invalide`});
-          }else{
-            Providers.update({
-              field: field,
-              value: value,
-              providerId: providerId
-            },
-            (result) => {
-              response.send(result);
-            })
-          }
-          
-        }else response.send({type: "failure", message: `Aucune valeur n'a été donnée!`});
-      }else response.send({type: "failure", message: `Veillez specifier l'élement a modifier !`});
-    }else response.send({type: "failure", message: `L'identifiant du client doit etre de ty texte !`});
-  }else response.send({ type: "failure",message:"Vous devez être connecté pour effectuer cette opération" });
+        } else
+          response.send({
+            type: "failure",
+            message: `Aucune valeur n'a été donnée!`,
+          });
+      } else
+        response.send({
+          type: "failure",
+          message: `Veillez specifier l'élement a modifier !`,
+        });
+    } else
+      response.send({
+        type: "failure",
+        message: `L'identifiant du client doit etre de ty texte !`,
+      });
+  } else
+    response.send({
+      type: "failure",
+      message: "Vous devez être connecté pour effectuer cette opération",
+    });
 });
 export default routes;

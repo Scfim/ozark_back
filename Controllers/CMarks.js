@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken"
 import sessionHandler from "../App/session.js"
 routes.post("/add",sessionHandler, (request, response)=>{
     const  {name,description,subCategorieId}= request.body;
+    
     if(request.session.user){
         const userId=request.session.user.data[0].user_id
         if(validator(name).isString().check()){

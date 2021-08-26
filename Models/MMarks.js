@@ -50,7 +50,7 @@ class Marks{
               ).catch((err)=>{
                 callback({
                     type: "failure", 
-                    message:"Erreur lor de la verification du nom"
+                    message:"Erreur lor de la verification du nom",err
                 })
             })
             }
