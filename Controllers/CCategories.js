@@ -1,5 +1,5 @@
 import express from "express";
-import Categories from "../Models/MCategories.js"
+import Categories from "../Models/MCategories.js";
 const routes = express.Router();
 import validator from "./Validator.js";
 import sessionHandler from "../App/session.js"

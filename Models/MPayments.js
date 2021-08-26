@@ -1,11 +1,22 @@
-import Queries from"../App/Queries.js"
-import{databaseSchema,payementsSchema} from "../App/schema.js"
+import Queries from "../App/Queries.js";
+import { databaseSchema, payementsSchema } from "../App/schema.js";
 import { v4 as uuidv4 } from "uuid";
-const{payement}=databaseSchema
-const{id,referenceId,dateRecord,timeRecord,mount,envoy,exerciseId,userId,date,time}=payementsSchema
-export default class Payments{
-    static async insert(args, callback) {
-        const paymentId = uuidv4();
+const { payement } = databaseSchema;
+const {
+  id,
+  referenceId,
+  dateRecord,
+  timeRecord,
+  mount,
+  envoy,
+  exerciseId,
+  userId,
+  date,
+  time,
+} = payementsSchema;
+export default class Payments {
+  static async insert(args, callback) {
+    const paymentId = uuidv4();
     //verify if paymentId exist
     //=====================
     Queries.getSpecificFields({

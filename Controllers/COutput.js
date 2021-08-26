@@ -32,7 +32,11 @@ routes.post("/add", [sessionHandler,jwtVerify],(request, response)=>{
                 }else response.send({ type:"failure", message: "L'exercise est null" });  
             }else response.send({ type:"failure", message: "Echec de recuperation de l'exercice" }); 
         });
-    }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" }); 
     
-})
-export default routes
+  } else
+    response.send({
+      type: "failure",
+      message: "Vous devez être connecté pour éffectuer cette opération",
+    });
+});
+export default routes;

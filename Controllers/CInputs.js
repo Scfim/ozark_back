@@ -59,4 +59,4 @@ routes.post("/getProduct", [sessionHandler,jwtVerify], (request, response) => {
         message: "Vous devez être connecté pour éffectuer cette opération",
       });
 });
-export default routes
+export default routes;

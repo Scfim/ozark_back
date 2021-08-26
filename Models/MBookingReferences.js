@@ -1,5 +1,5 @@
-import Queries from"../App/Queries.js"
-import{databaseSchema,bookingsReferencesSchema}from"../App/Schema.js"
+import Queries from "../App/Queries.js";
+import { databaseSchema, bookingsReferencesSchema } from "../App/Schema.js";
 import { v4 as uuidv4 } from "uuid";
 const{id,number,date,time,statusPayement,statOutput,userId,exerciseId} =bookingsReferencesSchema
 const{references} = databaseSchema

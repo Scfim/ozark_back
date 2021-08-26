@@ -7,6 +7,7 @@ import sessionHandler from "../App/session.js"
 import jwtVerify from "../App/VerifyToken.js"
 routes.post("/add", [sessionHandler,jwtVerify], (request, response)=>{
     const  {name,description,subCategorieId}= request.body;
+    
     if(request.session.user){
         const userId=request.session.user.data[0].user_id
         if(validator(name).isString().check()){

@@ -1,11 +1,12 @@
 import express from "express";
-import Booking from "../Models/MBookings.js"
-import Reference from"../Models/MBookingReferences.js"
-import Exercise from "../Models/MExercises.js"
-import Payment from "../Models/MPayments.js"
-import Ouptut from "../Models/MOutputs.js"
+import Booking from "../Models/MBookings.js";
+import Reference from "../Models/MBookingReferences.js";
+import Exercise from "../Models/MExercises.js";
+import Payment from "../Models/MPayments.js";
+import Ouptut from "../Models/MOutputs.js";
 const routes = express.Router();
 import validator from "./Validator.js";
+
 import sessionHandler from "../App/session.js"
 import jwtVerify from "../App/VerifyToken.js"
 

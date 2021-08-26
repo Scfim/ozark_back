@@ -102,29 +102,41 @@ routes.post("/update", [sessionHandler,jwtVerify], (request, response) => {
           else if(field==="clientPhone"){
             if( validator(value).isPhoneNumber().check()===true){
               Providers.update({
+
                 field: field,
                 value: value,
-                providerId: providerId
+                providerId: providerId,
               },
               (result) => {
                 response.send(result);
-              })
-            }else response.send({type: "failure", message: `Le numéro est invalide`});
-          }else{
-            Providers.update({
-              field: field,
-              value: value,
-              providerId: providerId
-            },
-            (result) => {
-              response.send(result);
-            })
+              }
+            );
           }
-          
-        }else response.send({type: "failure", message: `Aucune valeur n'a été donnée!`});
-      }else response.send({type: "failure", message: `Veillez specifier l'élement a modifier !`});
-    }else response.send({type: "failure", message: `L'identifiant du client doit etre de ty texte !`});
-  }else response.send({ type: "failure",message:"Vous devez être connecté pour effectuer cette opération" });
+        } else
+          response.send({
+            type: "failure",
+            message: `Aucune valeur n'a été donnée!`,
+          });
+      } else
+        response.send({
+          type: "failure",
+          message: `Veillez specifier l'élement a modifier !`,
+        });
+    } else
+      response.send({
+        type: "failure",
+        message: `L'identifiant du client doit etre de ty texte !`,
+      });
+  } else
+    response.send({
+      type: "failure",
+      message: "L'identifiant du fournisseur doit etre du chaine de caractaire",
+    });
+  } else
+  response.send({
+    type: "failure",
+    message: "Vous devez être connecté pour effectuer cette opération",
+  });
 });
 routes.post("/getProviderLike", [sessionHandler,jwtVerify], (request, response) => {
   const providerName = request.body.providerName;

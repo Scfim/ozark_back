@@ -20,8 +20,8 @@ static async insert(args,callback) {
           } else {
                 Queries.addData({
                     table: `${input}`,
-                    fields: `${id},${productId},${providerId},${quantity},${unitePrice},${exerciseId},${dateRecord},${timeRecord},${comment},${date},${time},${userId},`,
-                    values:`?,?,?,?,?,?,,?,?,?,NOW(),NOW(),?`,
+                    fields: `${id},${productId},${providerId},${quantity},${unitePrice},${exerciseId},${dateRecord},${comment},${date},${time},${userId}`,
+                    values:`?,?,?,?,?,?,?,?,NOW(),NOW(),?`,
                     arguments:[
                         inputId,
                         args.productId,
@@ -30,7 +30,6 @@ static async insert(args,callback) {
                         args.unitePrice,                       
                         args.exerciseId,
                         args.dateRecord,
-                        args.timeRecord,
                         args.comment,
                         args.userId
                     ]
@@ -39,12 +38,15 @@ static async insert(args,callback) {
                     type: "success",
                     message:"Enregistrement effectué"
                     })
-                ).catch((err) =>                              
+                ).catch((err) =>  {
+                    console.log(err)
                     callback({
                     type: "failure",
                     message:"Echec d'enregistrement",
                     err,
                     })
+                }                            
+                    
                 );
           }
       })

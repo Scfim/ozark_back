@@ -98,33 +98,39 @@ routes.post("/update", [sessionHandler,jwtVerify], (request, response) => {
               })
             }else response.send({type: "failure", message: `Adress invalide`});
             
-          }
-          else if(field==="clientPhone"){
+          }else if(field==="clientPhone"){
             if( validator(value).isPhoneNumber().check()===true){
               Clients.update({
                 field: field,
                 value: value,
-                clientId: clientId
+                clientId: clientId,
               },
               (result) => {
                 response.send(result);
-              })
-            }else response.send({type: "failure", message: `Le numéro est invalide`});
-          }else{
-            Clients.update({
-              field: field,
-              value: value,
-              clientId: clientId
-            },
-            (result) => {
-              response.send(result);
-            })
-          }
-          
-        }else response.send({type: "failure", message: `Aucune valeur n'a été donnée!`});
-      }else response.send({type: "failure", message: `Veillez specifier l'élement a modifier !`});
-    }else response.send({type: "failure", message: `L'identifiant du client doit etre de ty texte !`});
-  }else response.send({ type: "failure",message:"Vous devez être connecté pour effectuer cette opération" });
+              }
+            );
+            }
+        } else
+          response.send({
+            type: "failure",
+            message: `Aucune valeur n'a été donnée!`,
+          });
+      } else
+        response.send({
+          type: "failure",
+          message: `Veillez specifier l'élement a modifier !`,
+        });
+    } else
+      response.send({
+        type: "failure",
+        message: `L'identifiant du client doit etre de ty texte !`,
+      });
+  }
+} else
+    response.send({
+      type: "failure",
+      message: "Vous devez être connecté pour effectuer cette opération",
+    });
 });
 routes.post("/getClientLike", [sessionHandler,jwtVerify], (request, response) => {
   const clientName = request.body.clientName;
