@@ -4,7 +4,8 @@ import validator from "./Validator.js";
 import Exercise from "../Models/MExercises.js"
 import Payement from "../Models/MPayments.js"
 import sessionHandler from "../App/session.js"
-routes.post("/add",sessionHandler,(request, response)=>{
+import jwtVerify from "../App/VerifyToken.js"
+routes.post("/add", [sessionHandler,jwtVerify],(request, response)=>{
     if(request.session.user){
         const userId=request.session.user.data[0].user_id        
         Exercise.getCurrent((resultExercise)=>{

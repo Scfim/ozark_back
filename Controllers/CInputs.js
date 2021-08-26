@@ -2,9 +2,10 @@ import express from "express";
 import Input from "../Models/MInputs.js";
 const routes = express.Router();
 import validator from "./Validator.js";
-import sessionHandler from "../App/session.js";
+import sessionHandler from "../App/session.js"
+import jwtVerify from "../App/VerifyToken.js";
 import Exercise from "../Models/MExercises.js"
-routes.post('/add', sessionHandler, (request, response)=>{
+routes.post('/add', [sessionHandler,jwtVerify], (request, response)=>{
     const{productId,providerId,quantity,unitePrice,dateRecord,timeRecord,comment} = request.body
     if(request.session.user){
         const userId=request.session.user.data[0].user_id        
@@ -28,7 +29,7 @@ routes.post('/add', sessionHandler, (request, response)=>{
         });
     }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
 })
-routes.post("/getProvider", sessionHandler, (request, response) => {
+routes.post("/getProvider", [sessionHandler,jwtVerify], (request, response) => {
     const providerName = request.body.providerName;
     if (request.session.user) {
       Input.getProvider(
@@ -43,7 +44,7 @@ routes.post("/getProvider", sessionHandler, (request, response) => {
         message: "Vous devez être connecté pour éffectuer cette opération",
       });
 });
-routes.post("/getProduct", sessionHandler, (request, response) => {
+routes.post("/getProduct", [sessionHandler,jwtVerify], (request, response) => {
     const productName = request.body.productName;
     if (request.session.user) {
       Input.getProduct(

@@ -29,9 +29,11 @@ import paymentRouter from "./Controllers/CPayments.js"
 import inputRouter from "./Controllers/CInputs.js"
 
 import cookieParser from "cookie-parser"
-
-
  const app = express();
+ database.connect((err) => {
+  if (!err) console.log("database connected");
+  else console.log("Database connection crashed !"+err);
+});
  app.use(cookieParser())
  app.use(express.json());
 

@@ -7,7 +7,9 @@ import Ouptut from "../Models/MOutputs.js"
 const routes = express.Router();
 import validator from "./Validator.js";
 import sessionHandler from "../App/session.js"
-routes.post("/add",sessionHandler,async (request, response)=>{
+import jwtVerify from "../App/VerifyToken.js"
+
+routes.post("/add", [sessionHandler,jwtVerify],async (request, response)=>{
     // const{productId,clientId,quantity,unitePrice,description,dateRecord}=request.body;
     const{clientId,description,dateRecord,timeRecord,paymentCheck,outputCheck}=request.body
     const {dataBooking}=request.body.dataBooking

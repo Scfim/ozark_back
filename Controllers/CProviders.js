@@ -2,8 +2,9 @@ import express from "express";
 import Providers from "../Models/MProviders.js";
 const routes = express.Router();
 import validator from "./Validator.js";
-import sessionHandler from "../App/session.js";
-routes.post("/add", sessionHandler, (request, response) => {
+import sessionHandler from "../App/session.js"
+import jwtVerify from "../App/VerifyToken.js";
+routes.post("/add", [sessionHandler,jwtVerify], (request, response) => {
   const { name, type, adress, phone, mail } = request.body;
   if (request.session.user) {
     const userId = request.session.user.data[0].user_id;
@@ -40,7 +41,7 @@ routes.post("/add", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour effectuer cette opération",
     });
 });
-routes.post("/getOne", sessionHandler, (request, response) => {
+routes.post("/getOne", [sessionHandler,jwtVerify], (request, response) => {
   const providerId = request.body.providerId;
   if (request.session.user) {
     Providers.get(
@@ -55,7 +56,7 @@ routes.post("/getOne", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/getAll", sessionHandler, (request, response) => {
+routes.post("/getAll", [sessionHandler,jwtVerify], (request, response) => {
   if (request.session.user) {
     Providers.getAll((result) => response.send(result));
   } else
@@ -64,7 +65,7 @@ routes.post("/getAll", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/delete", sessionHandler, (request, response) => {
+routes.post("/delete", [sessionHandler,jwtVerify], (request, response) => {
   const providerId = request.body.providerId;
   if (request.session.user) {
     Providers.delete(
@@ -79,7 +80,7 @@ routes.post("/delete", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/update",sessionHandler, (request, response) => {
+routes.post("/update", [sessionHandler,jwtVerify], (request, response) => {
   const { field, value,providerId } = request.body;
   if(request.session.user){    
     if(validator(providerId).isString().check()===true){
@@ -124,5 +125,20 @@ routes.post("/update",sessionHandler, (request, response) => {
       }else response.send({type: "failure", message: `Veillez specifier l'élement a modifier !`});
     }else response.send({type: "failure", message: `L'identifiant du client doit etre de ty texte !`});
   }else response.send({ type: "failure",message:"Vous devez être connecté pour effectuer cette opération" });
+});
+routes.post("/getProviderLike", [sessionHandler,jwtVerify], (request, response) => {
+  const providerName = request.body.providerName;
+  if (request.session.user) {
+    Providers.getProviderLike(
+      {
+        name: providerName,
+      },
+      (result) => response.send(result)
+    );
+  } else
+    response.send({
+      type: "failure",
+      message: "Vous devez être connecté pour éffectuer cette opération",
+    });
 });
 export default routes;

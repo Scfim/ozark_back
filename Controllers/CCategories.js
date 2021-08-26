@@ -3,7 +3,8 @@ import Categories from "../Models/MCategories.js"
 const routes = express.Router();
 import validator from "./Validator.js";
 import sessionHandler from "../App/session.js"
-routes.post("/add",sessionHandler, (request, response)=>{
+import jwtVerify from "../App/VerifyToken.js"
+routes.post("/add", [sessionHandler,jwtVerify], (request, response)=>{
     const  {name,type,}= request.body;
     
     if(request.session.user){
@@ -25,7 +26,7 @@ routes.post("/add",sessionHandler, (request, response)=>{
      }else response.send({ type:"failure", message: "Vous devez être connecté pour effectuer cette opération" });
     
 })
-routes.post("/getOne",sessionHandler, (request, response)=>{
+routes.post("/getOne", [sessionHandler,jwtVerify], (request, response)=>{
    const categorieId=request.body.categorieid
     if(request.session.user){
         Categories.get({
@@ -34,7 +35,7 @@ routes.post("/getOne",sessionHandler, (request, response)=>{
     }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
     
 })
-routes.post("/delete",sessionHandler, (request, response)=>{
+routes.post("/delete", [sessionHandler,jwtVerify], (request, response)=>{
    const categorieId=request.body.categorieid
     if(request.session.user){
         Categories.delete({
@@ -43,15 +44,14 @@ routes.post("/delete",sessionHandler, (request, response)=>{
     }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
     
 })
-
-routes.post("/getAll",sessionHandler, (request, response)=>{
+routes.post("/getAll", [sessionHandler,jwtVerify], (request, response)=>{
    const categorieid=request.body.categorieid
     if(request.session.user){
         Categories.getAll((result)=>response.send(result))
     }else response.send({ type:"failure", message: "Vous devez être connecté pour éffectuer cette opération" });
     
 })
-routes.post("/update",sessionHandler, (request, response)=>{
+routes.post("/update", [sessionHandler,jwtVerify], (request, response)=>{
    const {categoryId,categoryName}=request.body
     if(request.session.user){
         Categories.update({

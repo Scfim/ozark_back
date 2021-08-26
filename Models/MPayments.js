@@ -34,6 +34,7 @@ export default class Payments{
                 }).then((data) =>                                       
                     callback({
                     type: "success",
+                    message:"Enregistrement effectué"
                     })
                 ).catch((err) =>                              
                     callback({

@@ -34,6 +34,7 @@ export default class BookinReferences{
                     }).then((data) =>                                       
                         callback({
                         type: "success",
+                        message:"Enregistrement effectué",
                         id:referenceId
                         })
                     ).catch((err) =>                              

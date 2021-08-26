@@ -2,8 +2,9 @@ import express from "express";
 import Exercises from "../Models/MExercises.js";
 const routes = express.Router();
 import validator from "./Validator.js";
-import sessionHandler from "../App/session.js";
-routes.post("/add", sessionHandler, (request, response) => {
+import sessionHandler from "../App/session.js"
+import jwtVerify from "../App/VerifyToken.js";
+routes.post("/add", [sessionHandler,jwtVerify], (request, response) => {
   const { startDate, endDate } = request.body;
   if (request.session.user) {
     const userId = request.session.user.data[0].user_id;
@@ -44,7 +45,7 @@ routes.post("/add", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/getOne", sessionHandler, (request, response) => {
+routes.post("/getOne", [sessionHandler,jwtVerify], (request, response) => {
   const exerciseId = request.body.exerciseId;
   if (request.session.user) {
     Exercises.get(
@@ -59,7 +60,7 @@ routes.post("/getOne", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/getAll", sessionHandler, (request, response) => {
+routes.post("/getAll", [sessionHandler,jwtVerify], (request, response) => {
   if (request.session.user) {
     Exercises.getAll((result) => response.send(result));
   } else

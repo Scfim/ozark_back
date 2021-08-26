@@ -2,8 +2,9 @@ import express from "express";
 import SubCategories from "../Models/MSubCategories.js";
 const routes = express.Router();
 import validator from "./Validator.js";
-import sessionHandler from "../App/session.js";
-routes.post("/add", sessionHandler, (request, response) => {
+import sessionHandler from "../App/session.js"
+import jwtVerify from "../App/VerifyToken.js";
+routes.post("/add", [sessionHandler,jwtVerify], (request, response) => {
   const { categorieId, name, type } = request.body;
   if (request.session.user) {
     const userId = request.session.user.data[0].user_id;
@@ -41,7 +42,7 @@ routes.post("/add", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour effectuer cette opération",
     });
 });
-routes.post("/getOne", sessionHandler, (request, response) => {
+routes.post("/getOne", [sessionHandler,jwtVerify], (request, response) => {
   const subCategorieId = request.body.subCategorieId;
   if (request.session.user) {
     SubCategories.get(
@@ -56,7 +57,7 @@ routes.post("/getOne", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/delete", sessionHandler, (request, response) => {
+routes.post("/delete", [sessionHandler,jwtVerify], (request, response) => {
   const subCategorieId = request.body.subCategorieId;
   if (request.session.user) {
     SubCategories.delete(
@@ -71,7 +72,7 @@ routes.post("/delete", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/getCategories", sessionHandler, (request, response) => {
+routes.post("/getCategories", [sessionHandler,jwtVerify], (request, response) => {
   const categorieName = request.body.categorieName;
   if (request.session.user) {
     SubCategories.getCategories(
@@ -86,7 +87,7 @@ routes.post("/getCategories", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/getAll", sessionHandler, (request, response) => {
+routes.post("/getAll", [sessionHandler,jwtVerify], (request, response) => {
   if (request.session.user) {
     SubCategories.getAll((result) => response.send(result));
   } else
@@ -95,7 +96,7 @@ routes.post("/getAll", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/update",sessionHandler, (request, response)=>{
+routes.post("/update", [sessionHandler,jwtVerify], (request, response)=>{
   const {categorieId,subBategoryId,subCategoryName}=request.body
    if(request.session.user){
     SubCategories.update({

@@ -34,6 +34,7 @@ static async insert(args,callback) {
                 }).then((data) =>                                       
                     callback({
                     type: "success",
+                    message:"Enregistrement effectué"
                     })
                 ).catch((err) =>                              
                     callback({
@@ -51,6 +52,25 @@ static async get(args, callback) {
     table: `${clients}`,
     whereCloseFields: `${id}=?`,
     arguments: [args.id],
+    })
+    .then((data) => {
+        callback({
+        type: "success",
+        data,
+        });
+    })
+    .catch((err) => {
+        callback({
+        type: "failure",
+        err,
+        });
+    });
+}
+static async getClientLike(args, callback) {
+    await Queries.getAll({
+    table: `${clients}`,
+    whereCloseFields: `${name} like ? limit 10`,
+    arguments: [`%${args.name}%`],
     })
     .then((data) => {
         callback({

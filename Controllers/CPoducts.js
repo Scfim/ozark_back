@@ -2,8 +2,9 @@ import express from "express";
 import Products from "../Models/MProducts.js";
 const routes = express.Router();
 import validator from "./Validator.js";
-import sessionHandler from "../App/session.js";
-routes.post("/add", sessionHandler, (request, response) => {
+import sessionHandler from "../App/session.js"
+import jwtVerify from "../App/VerifyToken.js";
+routes.post("/add", [sessionHandler,jwtVerify], (request, response) => {
   const { subCategorieId, name, dosage, forme, format, alertStock, markId } =
     request.body;
   if (request.session.user) {
@@ -39,7 +40,7 @@ routes.post("/add", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour effectuer cette opération",
     });
 });
-routes.post("/getOne", sessionHandler, (request, response) => {
+routes.post("/getOne", [sessionHandler,jwtVerify], (request, response) => {
   const productId = request.body.productId;
   if (request.session.user) {
     Products.get(
@@ -54,7 +55,22 @@ routes.post("/getOne", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/delete", sessionHandler, (request, response) => {
+routes.post("/getProductLike", [sessionHandler,jwtVerify], (request, response) => {
+  const productName = request.body.productName;
+  if (request.session.user) {
+    Products.getProductLike(
+      {
+        name: productName,
+      },
+      (result) => response.send(result)
+    );
+  } else
+    response.send({
+      type: "failure",
+      message: "Vous devez être connecté pour éffectuer cette opération",
+    });
+});
+routes.post("/delete", [sessionHandler,jwtVerify], (request, response) => {
   const productId = request.body.productId;
   if (request.session.user) {
     Products.delete(
@@ -69,7 +85,7 @@ routes.post("/delete", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/getSubCateries", sessionHandler, (request, response) => {
+routes.post("/getSubCateries", [sessionHandler,jwtVerify], (request, response) => {
   const subCategorieName = request.body.subCategorieName;
   if (request.session.user) {
     Products.getSubCategories(
@@ -84,7 +100,7 @@ routes.post("/getSubCateries", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/getMarks", sessionHandler, (request, response) => {
+routes.post("/getMarks", [sessionHandler,jwtVerify], (request, response) => {
   const markName = request.body.markName;
   if (request.session.user) {
     Products.getMark(
@@ -99,7 +115,7 @@ routes.post("/getMarks", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/getAll", sessionHandler, (request, response) => {
+routes.post("/getAll", [sessionHandler,jwtVerify], (request, response) => {
   if (request.session.user) {
     Products.getAll((result) => response.send(result));
   } else
@@ -108,7 +124,7 @@ routes.post("/getAll", sessionHandler, (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
-routes.post("/update",sessionHandler, (request, response)=>{
+routes.post("/update", [sessionHandler,jwtVerify], (request, response)=>{
   const {productId,markId,productName}=request.body
    if(request.session.user){
       Marks.update({

@@ -2,9 +2,10 @@ import express from "express";
 const routes = express.Router();
 import validator from "./Validator.js";
 import sessionHandler from "../App/session.js"
+import jwtVerify from "../App/VerifyToken.js"
 import Ouptut from "../Models/MOutputs.js";
 import Exercise from "../Models/MExercises.js"
-routes.post("/add",sessionHandler,(request, response)=>{
+routes.post("/add", [sessionHandler,jwtVerify],(request, response)=>{
     const{dataOutput}= request.body.dataOutput
     const{envoy,dateRecord,timeRecord}=request.body
     if(request.session.user){

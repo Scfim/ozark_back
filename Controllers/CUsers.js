@@ -3,9 +3,10 @@ import User from "../Models/MUsers.js";
 const routes = express.Router();
 import validator from "./Validator.js";
 import jwt from "jsonwebtoken";
-import sessionHandler from "../App/session.js";
+import sessionHandler from "../App/session.js"
+import jwtVerify from "../App/VerifyToken.js";
 // CREATE USER
-routes.post("/add", sessionHandler, (request, response) => {
+routes.post("/add", [sessionHandler,jwtVerify], (request, response) => {
   const { name, lastName, email, phone, type, password, confirmPassword } =
     request.body;
   // if (request.session.user && request.session.user.data[0].user_type == "Admin") {
@@ -65,7 +66,7 @@ routes.post("/add", sessionHandler, (request, response) => {
   //     message: "Cette opération est reservé aux adminstrateur",
   //   });
 });
-routes.get("/getOne", sessionHandler, (request, response) => {
+routes.get("/getOne", [sessionHandler,jwtVerify], (request, response) => {
   const userId = request.body.userId;
   if (request.session.user) {
     User.get(
@@ -82,7 +83,7 @@ routes.get("/getOne", sessionHandler, (request, response) => {
       message: "Cette opération necessite une connection",
     });
 });
-routes.get("/getAll", sessionHandler, (request, response) => {
+routes.get("/getAll", [sessionHandler,jwtVerify], (request, response) => {
   if (request.session.user) {
     User.getAll((result) => {
       response.send(result);
@@ -94,7 +95,7 @@ routes.get("/getAll", sessionHandler, (request, response) => {
     });
 });
 // LOGIN USER
-routes.post("/login", sessionHandler, (request, response) => {
+routes.post("/login", [sessionHandler,jwtVerify], (request, response) => {
     const { username, password } = request.body;
   
     var type = "";
@@ -146,7 +147,7 @@ routes.post("/login", sessionHandler, (request, response) => {
       response.send({ type: "failure", message: `Identifiants incorrect` });
   } else response.send({ type: "failure", message: `Identifiants incorrect` });
 });
-routes.get("/login", sessionHandler, (request, response) => {
+routes.get("/login", [sessionHandler,jwtVerify], (request, response) => {
   console.log(request.session.user,request.session)
   if (request.session.user) {
     delete request.session.user.data[0].user_password;
@@ -174,7 +175,7 @@ const jwtVerify = (req, res, next) => {
 routes.get("/auth", jwtVerify, (request, response, next) => {
   response.send({ auth: true });
 });
-routes.post("/update",sessionHandler, (request, response) => {
+routes.post("/update", [sessionHandler,jwtVerify], (request, response) => {
   const { field, value } = request.body;
   if(request.session.user){
     const userId=request.session.user.data[0].user_id
@@ -221,7 +222,7 @@ routes.post("/update",sessionHandler, (request, response) => {
     }else response.send({type: "failure", message: `Vous devez être connecté pour effectuer cette opération !`});
   }else response.send({ type: "failure",message:"Vous devez être connecté pour effectuer cette opération" });
 });
-routes.post("/updatePassword", sessionHandler, (request, response) => {
+routes.post("/updatePassword", [sessionHandler,jwtVerify], (request, response) => {
   const { password, oldePassword } = request.body;
   if(request.session.user){
     const userId=request.session.user.data[0].user_id

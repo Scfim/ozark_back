@@ -31,7 +31,7 @@ class Exercise{
                         args.userId
                     ]
                 }).then((data) =>{
-                  if (data.length === 1 || data.length >= 1) {
+                  if (data.length === 1 || data.length >= 1) {                    
                     Queries.updateData(
                       {
                         table:`${exercises}`,

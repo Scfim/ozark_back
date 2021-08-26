@@ -44,6 +44,7 @@ class SubCategories{
                       }).then((data) =>                                       
                           callback({
                           type: "success",
+                          message:"Enregistrement effectué"
                           })
                       ).catch((err) =>                              
                           callback({
