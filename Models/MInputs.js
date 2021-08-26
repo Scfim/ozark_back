@@ -92,7 +92,7 @@ static async getProduct(args, callback) {
     await Queries.getAll({
     table: `products`,
     whereCloseFields: `product_name like ?`,
-    arguments: [`%${args.providerName}%`],
+    arguments: [`%${args.productName}%`],
     })
     .then((data) => {
         callback({
