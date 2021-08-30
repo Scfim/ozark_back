@@ -22,10 +22,9 @@ routes.post("/add", [sessionHandler,jwtVerify],(request, response)=>{
                             quantity:dataOutput[i].quantity,
                             unitePrice:dataOutput[i].unitePrice,                           
                             exerciseId:exerciseId,
-                            dateRecord:dateRecord,
-                            timeRecord:timeRecord,
-                            perisable:perisable,
-                            envoy:envoy,
+                            dateRecord:dataOutput[i].daysDate,                         
+                           
+                            envoy:dataOutput[i].client,
                             userId:userId
                         },(result)=>response.send(result))
                     }

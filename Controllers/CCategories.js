@@ -8,7 +8,7 @@ routes.post("/add", [sessionHandler,jwtVerify], (request, response)=>{
     const  {name,type,}= request.body;
     
     if(request.session.user){
-        console.log(name)
+       
         const userId=request.session.user.data[0].user_id
         if(validator(name).isString().check()){
             if(validator(type).isString().check){

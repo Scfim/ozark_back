@@ -39,7 +39,7 @@ static async insert(args,callback) {
                     message:"Enregistrement effectué"
                     })
                 ).catch((err) =>  {
-                    console.log(err)
+                   
                     callback({
                     type: "failure",
                     message:"Echec d'enregistrement",

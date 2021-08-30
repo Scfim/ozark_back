@@ -9,11 +9,9 @@ const {
   quantity,
   unitePrice,
   exerciseId,
-  dateRecord,
-  timeRecord,
+  dateRecord,  
   date,
   time,
-  perisable,
   envoy,
   userId,
 } = outputSchema;
@@ -35,8 +33,8 @@ export default class Ouptut {
         Queries.addData({
           table: `${output}`,
           fields: `${id},${bookingId},${reference},${outputNumber},${quantity},${unitePrice},
-                        ${exerciseId},${dateRecord},${timeRecord},${perisable},${envoy},${date},${time},${userId};`,
-                        values:`?,?,?,?,?,?,?,?,?,?,?,NOW(),NOW(),?`,
+                        ${exerciseId},${dateRecord},${envoy},${date},${time},${userId};`,
+                        values:`?,?,?,?,?,?,?,?,?,NOW(),NOW(),?`,
                         arguments:[
                             outputId,
                             args.bookingId,
@@ -45,9 +43,8 @@ export default class Ouptut {
                             args.quantity,
                             args.unitePrice,                           
                             args.exerciseId,
-                            args.dateRecord,
-                            args.timeRecord,
-                            args.perisable,
+                            args.dateRecord,                            
+                           
                             args.envoy,
                             args.userId
                         ]

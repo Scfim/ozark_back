@@ -30,13 +30,12 @@ export default class Payments {
           } else {
                 Queries.addData({
                     table: `${payement}`,
-                    fields: `${id},${referenceId},${dateRecord},${timeRecord},${mount},${envoy},${exerciseId},${date},${time},${userId}`,
+                    fields: `${id},${referenceId},${dateRecord},${mount},${envoy},${exerciseId},${date},${time},${userId}`,
                     values:`?,?,?,?,?,?,?,NOW(),NOW(),?`,
                     arguments:[
                         paymentId,
                         args.referenceId,
-                        args.dateRecord,
-                        args.timeRecord,
+                        args.dateRecord,                      
                         args.mount,
                         args.envoy,
                         args.exerciseId,

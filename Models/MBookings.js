@@ -37,9 +37,9 @@ export default class booking {
         Queries.addData({
           table: `${bookings}`,
 
-          fields: `${id},${productId},${clientId},${quantity},${unitePrice},${reference},${description},${exerciseId},${dateRecord},${timeRecord},${date},${time},${userId};`,
+          fields: `${id},${productId},${clientId},${quantity},${unitePrice},${reference},${description},${exerciseId},${dateRecord},${date},${time},${userId}`,
 
-                    values:`?,?,?,?,?,?,?,?,?,?,NOW(),NOW(),?`,
+                    values:`?,?,?,?,?,?,?,?,?,NOW(),NOW(),?`,
                     arguments:[
                         bookingId,
                         args.productId,
@@ -49,8 +49,7 @@ export default class booking {
                         args.reference,
                         args.description,
                         args.exerciseId,
-                        args.dateRecord,
-                        args.timeRecord,
+                        args.dateRecord,                       
                         args.userId
                     ]
                 }).then((data) =>                                       

@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
     const token = req.headers["x-access-token"];
     var auth = false,
       message = "No token provided";
+    
     if (token) {
       jwt.verify(
         token,

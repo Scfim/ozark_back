@@ -14,8 +14,7 @@ routes.post("/add", [sessionHandler,jwtVerify],(request, response)=>{
                 if(exerciseId!==null&&exerciseId!==""&&exerciseId!==undefined){
                     Payement.insert({
                         referenceId:referenceId,
-                        dateRecord: dateRecord,
-                        timeRecord:timeRecord,
+                        dateRecord: dateRecord,                        
                         mount:mount,
                         envoy:envoy,
                         exerciseId:exerciseId,

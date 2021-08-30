@@ -19,17 +19,16 @@ export default class BookinReferences{
               } else {
                     Queries.addData({
                         table: `${references}`,
-                        fields: `${id},${number},${date},${time},${statusPayement},${statOutput},${userId},${exerciseId};`,
-                        values:`?,?,?,?,?,?,?,?`,
+                        fields: `${id},${number},${date},${time},${statusPayement},${statOutput},${userId},${exerciseId}`,
+                        values:`?,?,NOW(),NOW(),?,?,?,?`,
                         arguments:[
                             referenceId,
                             args.number,
                             0,
-                            0,
-                            args.date,
-                            args.time,
+                            0,                           
+                            args.userId,
                             args.exerciseId,                            
-                            args.userId
+                            
                         ]
                     }).then((data) =>                                       
                         callback({
@@ -52,6 +51,24 @@ static async getCount(callback) {
     await Queries.myQuery({
       query: `SELECT count(*) as count FROM ${references} where ${id}!=?`,
       arguments: ["arg#$##$@#@#2s.id"],
+    })
+      .then((data) => {
+        callback({
+          type: "success",
+          data,
+        });
+      })
+      .catch((err) => {
+        callback({
+          type: "failure",
+          err,
+        });
+      });
+  }
+static async getRefrenceLike(args,callback) {
+    await Queries.myQuery({
+      query: `SELECT bookings.booking_id,bookings.date_record,bookings.booking_id,products.product_name,bookings.quantity,bookings.unite_price,bookings.date_record,clients.client_name,bookings.client_id, bookings_references.booking_reference_id, bookings_references.booking_reference_number from bookings_references INNER JOIN bookings on bookings.booking_reference_id=bookings_references.booking_reference_id INNER JOIN products on products.product_id=bookings.product_id INNER JOIN clients on clients.client_id=bookings.client_id where bookings_references.booking_reference_number = ?`,
+      arguments: [args.number],
     })
       .then((data) => {
         callback({
