@@ -129,4 +129,23 @@ static async getAll(callback) {
         });
       });
 }
+static async inputJournal(args,callback) {
+    await Queries.getAll({
+      table: `${input}`,
+      whereCloseFields: `${date}=?`,
+      arguments: [args.data],
+    })
+      .then((data) => {
+        callback({
+          type: "success",
+          data,
+        });
+      })
+      .catch((err) => {
+        callback({
+          type: "failure",
+          err,
+        });
+      });
+}
 }

@@ -56,5 +56,62 @@ export default class Payments {
                 );
           }
       })
-    }
+  }
+  static async paymentHistory(args, callback) {
+    await Queries.getAll({
+      table: `${payement}`,
+      whereCloseFields: `${number}=?`,
+      arguments: [args.number],
+    })
+      .then((data) => {
+        callback({
+          type: "success",
+          data,
+        });
+      })
+      .catch((err) => {
+        callback({
+          type: "failure",
+          err,
+        });
+      });
+  }
+  static async paymentNote(args, callback) {
+    await Queries.getAll({
+      table: `${payement}`,
+      whereCloseFields: `${id}=?`,
+      arguments: [args.id],
+    })
+      .then((data) => {
+        callback({
+          type: "success",
+          data,
+        });
+      })
+      .catch((err) => {
+        callback({
+          type: "failure",
+          err,
+        });
+      });
+  }
+  static async paymentJournal(args, callback) {
+    await Queries.getAll({
+      table: `${payement}`,
+      whereCloseFields: `${date}=?`,
+      arguments: [args.date],
+    })
+      .then((data) => {
+        callback({
+          type: "success",
+          data,
+        });
+      })
+      .catch((err) => {
+        callback({
+          type: "failure",
+          err,
+        });
+      });
+  }
 }
