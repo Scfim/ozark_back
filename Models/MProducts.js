@@ -43,7 +43,7 @@ class Product {
                 message: "La marque avec le meme nom existe déjà",
               });
             } else {
-              Queries.addData({
+              Queries.getSpecificFields({
                 table: `${products}`,
                 fields: `${name}`,
                 whereCloseFields: `${name}=? and ${markId}=?`,

@@ -5,21 +5,24 @@ import sessionHandler from "../App/session.js"
 import jwtVerify from "../App/VerifyToken.js"
 import Ouptut from "../Models/MOutputs.js";
 import Exercise from "../Models/MExercises.js"
-routes.post("/add", [sessionHandler,jwtVerify],(request, response)=>{
+// routes.post("/add", [sessionHandler,jwtVerify],(request, response)=>{
+routes.get("/add", async (request, response)=>{
     const outBookings=request.body.outBookings
+    
     const{customer,booking_reference_id,daysDate}=request.body
-    let verifyOperation=""
+    var verifyOperation=""
+    
     if(request.session.user){
         const userId=request.session.user.data[0].user_id        
-        Exercise.getCurrent((resultExercise) => {
+       await Exercise.getCurrent((resultExercise) => {
             if (resultExercise.type === "success" && resultExercise.data.length > 0) {
               const exerciseId = resultExercise.data[0].exercise_id;
                 if(exerciseId!==null&&exerciseId!==""&&exerciseId!==undefined){
                     for(let i=0;i<outBookings.length;i++){
                         Ouptut.insert({
                             bookingId:outBookings[i].booking_id,
-                            reference:booking_reference_id,
-                            productId:outBookings[i].product_id,                            
+                            productId:outBookings[i].product_id,
+                            referenceId:booking_reference_id,                                                        
                             outputNumber:"",
                             quantity:outBookings[i].quantity,
                             unitePrice:outBookings[i].unite_price,                           
@@ -27,17 +30,20 @@ routes.post("/add", [sessionHandler,jwtVerify],(request, response)=>{
                             dateRecord:daysDate,
                             envoy:customer,
                             userId:userId
-                        },(result)=>{
-                            if(result.status==="success"){
-                                verifyOperation="success"
-                            }else {
-                                verifyOperation="failure"
-                                response.send({ type:"failure", message: "Echec d'enregistrement de la sortie numero "+outBookings[i] })
-                            }
+                        },(result)=>{                            
+                           if(result.type==="success"){                               
+                               verifyOperation="success" 
+                               response.send(result)                             
+                            } 
+                           else{
+                               verifyOperation="failure" 
+                               response.send(result)                           
+                            }                            
                         })
+                        
                     }
-                    if(verifyOperation==="success") response.send({ type:"success", message: "Enregistrement effectué" })                            
-                    else response.send({ type:"failure", message: "Echec d'enregistrement" })
+                    
+                                       
                 }else response.send({ type:"failure", message: "L'exercise est null" });  
             }else response.send({ type:"failure", message: "Echec de recuperation de l'exercice" }); 
         });
@@ -48,4 +54,7 @@ routes.post("/add", [sessionHandler,jwtVerify],(request, response)=>{
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
+routes.get("/test",  (request, response)=>{
+    console.log("ok ok")
+})
 export default routes;
