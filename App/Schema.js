@@ -144,7 +144,8 @@ export const outputSchema={
     time:"system_time",
     perisable:"product_id_input_perisable",
     envoy:"envoy",    
-    userId:"user_id"
+    userId:"user_id",
+    productId:"product_id"
 }
 export const payementsSchema={
     id:"payement_id",

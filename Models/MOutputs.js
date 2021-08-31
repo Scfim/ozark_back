@@ -14,6 +14,7 @@ const {
   time,
   envoy,
   userId,
+  productId
 } = outputSchema;
 const { output } = databaseSchema;
 export default class Ouptut {
@@ -32,19 +33,19 @@ export default class Ouptut {
       } else {
         Queries.addData({
           table: `${output}`,
-          fields: `${id},${bookingId},${reference},${outputNumber},${quantity},${unitePrice},
+          fields: `${id},${bookingId},${productId},${reference},${outputNumber},${quantity},${unitePrice},
                         ${exerciseId},${dateRecord},${envoy},${date},${time},${userId};`,
-                        values:`?,?,?,?,?,?,?,?,?,NOW(),NOW(),?`,
+                        values:`?,?,?,?,?,?,?,?,?,?,NOW(),NOW(),?`,
                         arguments:[
                             outputId,
                             args.bookingId,
                             args.reference,
+                            args.productId,
                             args.outputNumber,
                             args.quantity,
                             args.unitePrice,                           
                             args.exerciseId,
-                            args.dateRecord,                            
-                           
+                            args.dateRecord,
                             args.envoy,
                             args.userId
                         ]

@@ -6,28 +6,38 @@ import jwtVerify from "../App/VerifyToken.js"
 import Ouptut from "../Models/MOutputs.js";
 import Exercise from "../Models/MExercises.js"
 routes.post("/add", [sessionHandler,jwtVerify],(request, response)=>{
-    console.log(request.body)
-    const{envoy,dateRecord,timeRecord}=request.body
+    const outBookings=request.body.outBookings
+    const{customer,booking_reference_id,daysDate}=request.body
+    let verifyOperation=""
     if(request.session.user){
         const userId=request.session.user.data[0].user_id        
-        Exercise.getCurrent((resultExercise)=>{
-            if(resultExercise.type === "success" && resultExercise.data.length>0){            
-                const exerciseId= resultExercise.data[0].exercise_id
+        Exercise.getCurrent((resultExercise) => {
+            if (resultExercise.type === "success" && resultExercise.data.length > 0) {
+              const exerciseId = resultExercise.data[0].exercise_id;
                 if(exerciseId!==null&&exerciseId!==""&&exerciseId!==undefined){
-                    for(let i=0;i<dataOutput.length;i++){
+                    for(let i=0;i<outBookings.length;i++){
                         Ouptut.insert({
-                            bookingId:dataOutput[i].booking_id,
-                            reference:dataOutput[i].booking_reference_id,
-                            outputNumber:outputNumber,
-                            quantity:dataOutput[i].quantity,
-                            unitePrice:dataOutput[i].unitePrice,                           
+                            bookingId:outBookings[i].booking_id,
+                            reference:booking_reference_id,
+                            productId:outBookings[i].product_id,                            
+                            outputNumber:"",
+                            quantity:outBookings[i].quantity,
+                            unitePrice:outBookings[i].unite_price,                           
                             exerciseId:exerciseId,
-                            dateRecord:dataOutput[i].daysDate,                         
-                           
-                            envoy:dataOutput[i].client,
+                            dateRecord:daysDate,
+                            envoy:customer,
                             userId:userId
-                        },(result)=>response.send(result))
+                        },(result)=>{
+                            if(result.status==="success"){
+                                verifyOperation="success"
+                            }else {
+                                verifyOperation="failure"
+                                response.send({ type:"failure", message: "Echec d'enregistrement de la sortie numero "+outBookings[i] })
+                            }
+                        })
                     }
+                    if(verifyOperation==="success") response.send({ type:"success", message: "Enregistrement effectué" })                            
+                    else response.send({ type:"failure", message: "Echec d'enregistrement" })
                 }else response.send({ type:"failure", message: "L'exercise est null" });  
             }else response.send({ type:"failure", message: "Echec de recuperation de l'exercice" }); 
         });
