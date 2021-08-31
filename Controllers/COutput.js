@@ -6,7 +6,7 @@ import jwtVerify from "../App/VerifyToken.js"
 import Ouptut from "../Models/MOutputs.js";
 import Exercise from "../Models/MExercises.js"
 routes.post("/add", [sessionHandler,jwtVerify],(request, response)=>{
-    const{dataOutput}= request.body.dataOutput
+    console.log(request.body)
     const{envoy,dateRecord,timeRecord}=request.body
     if(request.session.user){
         const userId=request.session.user.data[0].user_id        
