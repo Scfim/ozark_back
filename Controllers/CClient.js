@@ -5,6 +5,7 @@ import validator from "./Validator.js";
 import sessionHandler from "../App/session.js"
 import jwtVerify from "../App/VerifyToken.js";
 routes.post("/add", [sessionHandler,jwtVerify], (request, response) => {
+  console.log(request.body)
   const { name, type, adress, phone, mail } = request.body;
   if (request.session.user) {
     const userId = request.session.user.data[0].user_id;

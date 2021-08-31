@@ -95,7 +95,7 @@ routes.get("/getAll", [sessionHandler,jwtVerify], (request, response) => {
     });
 });
 // LOGIN USER
-routes.post("/login", [sessionHandler,jwtVerify], (request, response) => {
+routes.post("/login",sessionHandler, (request, response) => {
     const { username, password } = request.body;
   
     var type = "";
@@ -147,8 +147,8 @@ routes.post("/login", [sessionHandler,jwtVerify], (request, response) => {
       response.send({ type: "failure", message: `Identifiants incorrect` });
   } else response.send({ type: "failure", message: `Identifiants incorrect` });
 });
-routes.get("/login", [sessionHandler,jwtVerify], (request, response) => {
-  console.log(request.session.user,request.session)
+routes.get("/login", sessionHandler, (request, response) => {
+ 
   if (request.session.user) {
     delete request.session.user.data[0].user_password;
     response.send({ authenticated: true, user: request.session.user });

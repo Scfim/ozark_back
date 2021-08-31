@@ -110,7 +110,7 @@ export const bookingsReferencesSchema={
     number:"booking_reference_number",
     date:"date_record",
     time:"time_record",
-    statusPayement:"status_payment",
+    statusPayement:"status_payement",
     statOutput:"status_output",
     userId:"user_id",
     exerciseId:"exercise_id",

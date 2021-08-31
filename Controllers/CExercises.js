@@ -60,6 +60,21 @@ routes.post("/getOne", [sessionHandler,jwtVerify], (request, response) => {
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
+/**
+ * Getting the current exercise
+ */
+ routes.post("/getCurrent", [sessionHandler,jwtVerify], (request, response) => {
+  if (request.session.user) {
+    Exercises.getCurrent(
+      (result) => response.send(result)
+    );
+  } else
+    response.send({
+      type: "failure",
+      message: "Vous devez être connecté pour éffectuer cette opération",
+    });
+});
+
 routes.post("/getAll", [sessionHandler,jwtVerify], (request, response) => {
   if (request.session.user) {
     Exercises.getAll((result) => response.send(result));
