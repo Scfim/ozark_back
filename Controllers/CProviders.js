@@ -10,7 +10,7 @@ routes.post("/add", [sessionHandler,jwtVerify], (request, response) => {
     const userId = request.session.user.data[0].user_id;
     if (validator(name).isString().check()) {
       if (validator(adress).isString().check) {
-        if (validator(phone).isString().check) {
+        if (validator(phone).isPhoneNumber().check) {
           Providers.insert(
             {
               name: name,

@@ -38,9 +38,9 @@ export default class Ouptut {
                         values:`?,?,?,?,?,?,?,?,?,NOW(),NOW(),?`,
                         arguments:[
                             outputId,
-                            args.bookingId, 
+                            args.bookingId,
                             args.productId,
-                            args.reference,                           
+                            args.referenceId,
                             args.quantity,
                             args.unitePrice,                           
                             args.exerciseId,
