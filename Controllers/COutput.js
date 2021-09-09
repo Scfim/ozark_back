@@ -9,7 +9,7 @@ routes.post("/add", [sessionHandler,jwtVerify], async(request, response)=>{
     const outBookings=request.body.outBookings
     console.log(request.body)
     const{customer,booking_reference_id,daysDate}=request.body
-    var verifyOperation=""
+    var verifyOperation=[]
     
     if(request.session.user){
         const userId=request.session.user.data[0].user_id        
@@ -24,25 +24,26 @@ routes.post("/add", [sessionHandler,jwtVerify], async(request, response)=>{
                             productId:outBookings[i].product_id,
                             referenceId:booking_reference_id,                                                        
                             outputNumber:"",
-                            quantity:outBookings[i].quantity,
+                            quantity:outBookings[i].outQuantity,
                             unitePrice:outBookings[i].unite_price,                           
                             exerciseId:exerciseId,
                             dateRecord:daysDate,
                             envoy:customer,
                             userId:userId
-                        },(result)=>{                            
+                        },(result)=>{ 
+                                                   
                            if(result.type==="success"){                               
-                               verifyOperation="success" 
-                               response.send(result)                             
+                               verifyOperation.push("success")
+                                                          
                             } 
                            else{
-                               verifyOperation="failure" 
-                               response.send(result)                           
+                               verifyOperation.push("failure") 
+                                                       
                             }                            
                         })
                         
                     }
-                    
+                    console.log(verifyOperation)
                                        
                 }else response.send({ type:"failure", message: "L'exercise est null" });  
             }else response.send({ type:"failure", message: "Echec de recuperation de l'exercice" }); 
