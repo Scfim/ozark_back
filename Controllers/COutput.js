@@ -5,12 +5,11 @@ import sessionHandler from "../App/session.js"
 import jwtVerify from "../App/VerifyToken.js"
 import Ouptut from "../Models/MOutputs.js";
 import Exercise from "../Models/MExercises.js"
-// routes.post("/add", [sessionHandler,jwtVerify],(request, response)=>{
-routes.get("/add", async (request, response)=>{
+routes.post("/add", [sessionHandler,jwtVerify], async(request, response)=>{
     const outBookings=request.body.outBookings
-    
+    console.log(request.body)
     const{customer,booking_reference_id,daysDate}=request.body
-    var verifyOperation=""
+    var verifyOperation=[]
     
     if(request.session.user){
         const userId=request.session.user.data[0].user_id   
@@ -20,31 +19,33 @@ routes.get("/add", async (request, response)=>{
               const exerciseId = resultExercise.data[0].exercise_id;
                 if(exerciseId!==null&&exerciseId!==""&&exerciseId!==undefined){
                     for(let i=0;i<outBookings.length;i++){
-                        const out=await    Ouptut.insert({
+                        console.log(outBookings[i])
+                        Ouptut.insert({
                             bookingId:outBookings[i].booking_id,
                             productId:outBookings[i].product_id,
                             referenceId:booking_reference_id,                                                        
                             outputNumber:"",
-                            quantity:outBookings[i].quantity,
+                            quantity:outBookings[i].outQuantity,
                             unitePrice:outBookings[i].unite_price,                           
                             exerciseId:exerciseId,
                             dateRecord:daysDate,
                             envoy:customer,
                             userId:userId
-                        },(result)=>{                            
+                        },(result)=>{ 
+                                                   
                            if(result.type==="success"){                               
-                               verifyOperation="success" 
-                               response.send(result)                             
+                               verifyOperation.push("success")
+                                                          
                             } 
                            else{
-                               verifyOperation="failure" 
-                               response.send(result)                           
+                               verifyOperation.push("failure") 
+                                                       
                             }                            
                         })
                         result.push(out.type)
                         
                     }
-                    
+                    console.log(verifyOperation)
                                        
                 }else response.send({ type:"failure", message: "L'exercise est null" });  
             }else response.send({ type:"failure", message: "Echec de recuperation de l'exercice" }); 
