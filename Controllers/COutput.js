@@ -13,13 +13,14 @@ routes.get("/add", async (request, response)=>{
     var verifyOperation=""
     
     if(request.session.user){
-        const userId=request.session.user.data[0].user_id        
+        const userId=request.session.user.data[0].user_id   
+        var result=[]     
        await Exercise.getCurrent((resultExercise) => {
             if (resultExercise.type === "success" && resultExercise.data.length > 0) {
               const exerciseId = resultExercise.data[0].exercise_id;
                 if(exerciseId!==null&&exerciseId!==""&&exerciseId!==undefined){
                     for(let i=0;i<outBookings.length;i++){
-                        Ouptut.insert({
+                        const out=await    Ouptut.insert({
                             bookingId:outBookings[i].booking_id,
                             productId:outBookings[i].product_id,
                             referenceId:booking_reference_id,                                                        
@@ -40,6 +41,7 @@ routes.get("/add", async (request, response)=>{
                                response.send(result)                           
                             }                            
                         })
+                        result.push(out.type)
                         
                     }
                     

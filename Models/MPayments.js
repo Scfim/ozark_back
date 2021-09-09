@@ -31,7 +31,7 @@ export default class Payments {
                 Queries.addData({
                     table: `${payement}`,
                     fields: `${id},${referenceId},${dateRecord},${mount},${envoy},${exerciseId},${date},${time},${userId}`,
-                    values:`?,?,?,?,?,?,?,NOW(),NOW(),?`,
+                    values:`?,?,?,?,?,?,NOW(),NOW(),?`,
                     arguments:[
                         paymentId,
                         args.referenceId,

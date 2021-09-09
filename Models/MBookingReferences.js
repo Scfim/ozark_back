@@ -67,7 +67,7 @@ static async getCount(callback) {
   }
 static async getRefrenceLike(args,callback) {
     await Queries.myQuery({
-      query: `SELECT bookings.booking_id,bookings.date_record,bookings.booking_id,,products.product_id,products.product_name,bookings.quantity,bookings.unite_price,bookings.date_record,clients.client_name,bookings.client_id, bookings_references.booking_reference_id, bookings_references.booking_reference_number from bookings_references INNER JOIN bookings on bookings.booking_reference_id=bookings_references.booking_reference_id INNER JOIN products on products.product_id=bookings.product_id INNER JOIN clients on clients.client_id=bookings.client_id where bookings_references.booking_reference_number = ?`,
+      query: `SELECT bookings.booking_id,bookings.date_record,bookings.booking_id,products.product_id,products.product_name,bookings.quantity,bookings.unite_price,bookings.date_record,clients.client_name,bookings.client_id, bookings_references.booking_reference_id, bookings_references.booking_reference_number from bookings_references INNER JOIN bookings on bookings.booking_reference_id=bookings_references.booking_reference_id INNER JOIN products on products.product_id=bookings.product_id INNER JOIN clients on clients.client_id=bookings.client_id where bookings_references.booking_reference_number = ?`,
       arguments: [args.number],
     })
       .then((data) => {
@@ -83,4 +83,5 @@ static async getRefrenceLike(args,callback) {
         });
       });
   }
+
 }

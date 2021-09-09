@@ -103,4 +103,25 @@ export default class Ouptut {
         });
       });
   }
+  static async getStatementOfOutput(args,callback) {
+    await Queries.myQuery({
+      query: `SELECT bookings.date_record,products.product_name,bookings.quantity,bookings.unite_price,output_traffic.quantity as qteOut,
+      output_traffic.date_record, bookings_references.booking_reference_number
+      FROM output_traffic inner join bookings on bookings.booking_id=output_traffic.booking_id 
+      inner join products on products.product_id=bookings.product_id inner join bookings_references on bookings_references.booking_reference_id=output_traffic.booking_reference_id where bookings_references.booking_reference_number=?`,
+      arguments: [args.number],
+    })
+      .then((data) => {
+        callback({
+          type: "success",
+          data,
+        });
+      })
+      .catch((err) => {
+        callback({
+          type: "failure",
+          err,
+        });
+      });
+  }
 }
