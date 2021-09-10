@@ -27,6 +27,7 @@ import bookingRouter from "./Controllers/CBookings.js"
 import outputRouter from "./Controllers/COutput.js"
 import paymentRouter from "./Controllers/CPayments.js"
 import inputRouter from "./Controllers/CInputs.js"
+import ropportRouter from "./Controllers/CRapport.js"
 
 import cookieParser from "cookie-parser"
  const app = express();
@@ -55,5 +56,6 @@ app.use('/bookings',bookingRouter)
 app.use('/output',outputRouter)
 app.use('/payments',paymentRouter)
 app.use('/input',inputRouter)
+app.use('/rapport',ropportRouter)
 const PORT = process.env.PORT || 2723;
 app.listen(PORT, () => console.log(`Server start on port ${PORT}`));
