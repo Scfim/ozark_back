@@ -1,8 +1,6 @@
 import express from "express";
-
 import Ouptut from "../Models/MOutputs.js";
 const routes = express.Router();
-
 import sessionHandler from "../App/session.js";
 import jwtVerify from "../App/VerifyToken.js";
 routes.post("/getStatementOfOutput", [sessionHandler,jwtVerify], (request, response) => {
