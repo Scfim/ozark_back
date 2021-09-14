@@ -1,5 +1,5 @@
 //importing middlewares
-import mysql from "mysql"
+import mysql from "mysql";
 /**
  * @var {Props} database2 : Our database
  * @var {Props} user : Username Connection
@@ -7,18 +7,18 @@ import mysql from "mysql"
  * @var {Props} host : server
  */
 //Defining database constants
-const database2 = "ozark"
-const user = "root"
-const password = ""
-const host = "localhost"
-
+const database2 = "ozark";
+const user = "root";
+const password = "";
+const host = "localhost";
 
 //connection to the database
-const database = mysql.createConnection({
-   database:database2,
-   user,
-   password,
-   host
-})
+const database = mysql.createPool({
+  database: database2,
+  user,
+  password,
+  host,
+  connectionLimit: 10,
+});
 
-export default database
+export default database;
