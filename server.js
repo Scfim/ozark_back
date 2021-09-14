@@ -13,7 +13,6 @@
 
 import express from "express"
 import cors from "cors"
-import database from "./App/Config.js";
 import etabliRouter from "./Controllers/CEtablishement.js";
 import userRouter from "./Controllers/CUsers.js"
 import categoriesRouter from "./Controllers/CCategories.js"
@@ -31,10 +30,6 @@ import ropportRouter from "./Controllers/CRapport.js"
 
 import cookieParser from "cookie-parser"
  const app = express();
- database.connect((err) => {
-  if (!err) console.log("database connected");
-  else console.log("Database connection crashed !"+err);
-});
  app.use(cookieParser())
  app.use(express.json());
 
@@ -56,6 +51,6 @@ app.use('/bookings',bookingRouter)
 app.use('/output',outputRouter)
 app.use('/payments',paymentRouter)
 app.use('/input',inputRouter)
-app.use('/rapport',ropportRouter)
+app.use('/report',ropportRouter)
 const PORT = process.env.PORT || 2723;
 app.listen(PORT, () => console.log(`Server start on port ${PORT}`));

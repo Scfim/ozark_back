@@ -9,7 +9,6 @@ import validator from "./Validator.js";
 
 import sessionHandler from "../App/session.js";
 import jwtVerify from "../App/VerifyToken.js";
-import {useState} from "../App/useState.js"
 
 
 routes.post("/add", [sessionHandler, jwtVerify], async (request, response) => {
@@ -17,7 +16,6 @@ routes.post("/add", [sessionHandler, jwtVerify], async (request, response) => {
   const { isCash, allowOutPut } = request.body;
   const dataBooking = request.body.inputData;
   var referenceId = "";
-  const [verify, setVerify] = useState(false)
   var verifyBooking = false;
   if (request.session.user) {
     const userId = request.session.user.data[0].user_id;
