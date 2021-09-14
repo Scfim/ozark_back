@@ -34,11 +34,9 @@ class Etablishement {
       );
   }
   static async get(callback) {
-    await Queries.getAll({
+    await Queries.getAllSecured({
       table: `${etablishement}`,
-      whereCloseFields: `${name}`,
-      values: `?`,
-      arguments: ["sjdshksjh2323@@#@"],
+      securedField: `${name}`,
     })
       .then((data) => {
         callback({

@@ -41,7 +41,7 @@ routes.post('/add',(request,response)=>{
     )  
      
 })
-routes.get('/get',(request,response)=>{
+routes.post('/get',(request,response)=>{
     Etablishement.get(
         (result)=>response.send(result)
     )

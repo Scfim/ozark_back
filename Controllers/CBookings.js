@@ -17,6 +17,7 @@ routes.post("/add", [sessionHandler, jwtVerify], async (request, response) => {
   const dataBooking = request.body.inputData;
   var referenceId = "";
   var verifyBooking = false;
+  var verifyOperation=[]
   if (request.session.user) {
     const userId = request.session.user.data[0].user_id;
     Exercise.getCurrent((resultExercise) => {
@@ -60,10 +61,12 @@ routes.post("/add", [sessionHandler, jwtVerify], async (request, response) => {
                           },
                           (resultBooking) => {
                             if (resultBooking.type === "success") {
-                                verifyBooking=true                              
+                                verifyBooking=true  
+                                verifyOperation.push("success")                            
                                 response.send(resultBooking);                              
                             } else {
                                 verifyBooking=false
+                                verifyOperation.push("failure")
                               setVerify(false)
                               response.send({
                                 type: "failure",
@@ -76,22 +79,22 @@ routes.post("/add", [sessionHandler, jwtVerify], async (request, response) => {
                           }
                         );
                       }
-                      console.log(verifyBooking,"refid");
-                      if (verifyBooking === true) {
-                        // if(isCash===true) {
+                     
+                      if (verifyOperation.includes("failure")) {
+                        
+                        if(isCash===true) {
+                                Payment.insert({
+                                    referenceId:referenceId,
+                                    dateRecord:dataBooking[0].daysDate,
+                                    mount:dataBooking[0].mount,
+                                    envoy:dataBooking[0].client,
+                                    exerciseId:exerciseId,
+                                    userId:userId,
+                                },(resultPayment)=>{
+                                    if(resultPayment.type!=="success")response.send({ type:"failure", message: "Echec d'enregistrement du paiement" });
+                                })
 
-                        //         Payment.insert({
-                        //             referenceId:referenceId,
-                        //             dateRecord:dataBooking[0].daysDate,
-                        //             mount:dataBooking[0].mount,
-                        //             envoy:dataBooking[0].client,
-                        //             exerciseId:exerciseId,
-                        //             userId:userId,
-                        //         },(resultPayment)=>{
-                        //             if(resultPayment.type!=="success")response.send({ type:"failure", message: "Echec d'enregistrement du paiement" });
-                        //         })
-
-                        // }
+                        }
 
                         if (allowOutPut === true) {
                           Booking.get(
