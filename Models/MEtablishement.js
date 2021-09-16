@@ -41,7 +41,7 @@ class Etablishement {
       .then((data) => {
         callback({
           type: "success",
-          data,
+         
         });
       })
       .catch((err) => {
@@ -52,39 +52,13 @@ class Etablishement {
       });
   }
   static async update(args, callback) {
-    var { field, value, name } = args;
-    switch (field) {
-      case "Name":
-        field = name;
-        break;
-      case "Phone":
-        field = phone;
-        break;
-      case "Mail":
-        field = mail;
-        break;
-      case "webSite":
-        field = webSite;
-        break;
-      case "logo":
-        field = logo;
-        break;
-      case "bp":
-        field = bp;
-        break;
-      case "adress":
-        field = adress;
-        break;
-      default:
-        break;
-    }
     Queries.updateData({
-      table: users,
-      fields: `${field} = ?`,
+      table: `${etablishement}`,
+      fields: `${name} = ?,${phone}=?,${mail}=?,${webSite}=?,${logo}=?,${bp}=?,${adress}=?`,
       whereCloseFields: `${name} = ?`,
-      arguments: [value, name],
+      arguments: [args.name,args.phone, args.mail, args.webSite,args.logo,args.bp,args.address,args.name],
     })
-      .then((data) => {
+      .then(() => {
         callback({
           type: "success",
         });
