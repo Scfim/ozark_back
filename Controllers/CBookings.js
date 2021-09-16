@@ -175,8 +175,7 @@ routes.post("/add", [sessionHandler, jwtVerify], async (request, response) => {
     });
 });
 routes.post("/getBookingLike", [sessionHandler,jwtVerify], (request, response) => {
-  const {bookingNumber} = request.body;
-  console.log(bookingNumber)
+  const {bookingNumber} = request.body; 
   if (request.session.user) {
     Reference.getRefrenceLike(
       {
@@ -190,4 +189,15 @@ routes.post("/getBookingLike", [sessionHandler,jwtVerify], (request, response) =
       message: "Vous devez être connecté pour éffectuer cette opération",
     });
 });
+routes.post("/billNumber", [sessionHandler,jwtVerify], (request, response)=>{
+  if (request.session.user) {
+    Reference.getCount(
+      (result) => response.send(result)
+    );
+  } else
+    response.send({
+      type: "failure",
+      message: "Vous devez être connecté pour éffectuer cette opération",
+    });
+})
 export default routes;
