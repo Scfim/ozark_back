@@ -14,13 +14,13 @@ routes.post('/add',async(request,response)=>{
                     if(validator(phone).isPhoneNumber().check()){
                         if(validator(adress).isString().check()){
                             Etablishement.insert({
-                                name: "name",
-                                mail:"mail",
-                                phone:"phone",
-                                webSite: "webSite",
-                                logo: "logo",
-                                bp:"bp",
-                                adress:"adress",
+                                name: name,
+                                mail:mail,
+                                phone:phone,
+                                webSite: webSite,
+                                logo: logo,
+                                bp:bp,
+                                adress:adress,
                             },(result)=>response.send(result))
                         }else response.send({type:"failure", message: "L'adress doit être un text et elle est obligatoire" });        
                     }else response.send({type:"failure", message: "Numéro de téléphone invalide" }); 
@@ -31,13 +31,13 @@ routes.post('/add',async(request,response)=>{
                         if(validator(adress).isString().check()){
                                                        
                             Etablishement.update({
-                                name: "namek",
-                                mail:"mail",
-                                phone:"phone",
-                                webSite: "webSite",
-                                logo: "logo",
-                                bp:"bp",
-                                adress:"adress",
+                                name: name,
+                                mail:mail,
+                                phone:phone,
+                                webSite: webSite,
+                                logo: logo,
+                                bp:bp,
+                                adress:adress,
                             },(result)=>response.send(result))
                         }else response.send({type:"failure", message: "L'adress doit être un text et elle est obligatoire" });        
                     }else response.send({type:"failure", message: "Numéro de téléphone invalide" }); 
