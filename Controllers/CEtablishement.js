@@ -5,7 +5,7 @@ import sessionHandler from "../App/session.js"
 import jwtVerify from "../App/VerifyToken.js"
 const routes=express.Router();
 
-routes.get('/add',async(request,response)=>{ 
+routes.post('/add',async(request,response)=>{ 
     const{name,mail,phone,webSite,logo,bp,adress,field, value}=request.body;
     Etablishement.get(
         (result)=>{
