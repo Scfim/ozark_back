@@ -41,7 +41,7 @@ class Etablishement {
       .then((data) => {
         callback({
           type: "success",
-         
+         data
         });
       })
       .catch((err) => {
@@ -55,12 +55,13 @@ class Etablishement {
     Queries.updateData({
       table: `${etablishement}`,
       fields: `${name} = ?,${phone}=?,${mail}=?,${webSite}=?,${logo}=?,${bp}=?,${adress}=?`,
-      whereCloseFields: `${name} = ?`,
-      arguments: [args.name,args.phone, args.mail, args.webSite,args.logo,args.bp,args.address,args.name],
+      whereCloseFields: `${name} != ?`,
+      arguments: [args.name,args.phone, args.mail, args.webSite,args.logo,args.bp,args.address,"hdhfdjfhd@#@#$%"],
     })
       .then(() => {
         callback({
           type: "success",
+          message:"Modification effectuée"
         });
       })
       .catch((err) => {
