@@ -158,6 +158,7 @@ export const payementsSchema={
     userId:"user_id",
     date:"system_date",
     time:"system_time",
+    receiptNumber:"receipt_number"
 }
 export const databaseSchema={
     users:"users",

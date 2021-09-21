@@ -19,4 +19,20 @@ routes.post("/getStatementOfOutput", [sessionHandler,jwtVerify], (request, respo
         message: "Vous devez être connecté pour éffectuer cette opération",
       });
   });
+routes.post("/getJournalOutput", [sessionHandler,jwtVerify], (request, response) => {
+    const {dateRecord} = request.body;
+    console.log(bookingNumber)
+    if (request.session.user) {
+        Ouptut.getJournalOutput(
+        {
+          dateRecord: dateRecord,
+        },
+        (result) => response.send(result)
+      );
+    } else
+      response.send({
+        type: "failure",
+        message: "Vous devez être connecté pour éffectuer cette opération",
+      });
+  });
   export default routes;

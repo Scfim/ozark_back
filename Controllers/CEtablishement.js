@@ -28,8 +28,7 @@ routes.post('/add',async(request,response)=>{
             }else{
                 if(validator(name).isString().check()){
                     if(validator(phone).isPhoneNumber().check()){
-                        if(validator(adress).isString().check()){
-                                                       
+                        if(validator(adress).isString().check()){                                                       
                             Etablishement.update({
                                 name: name,
                                 mail:mail,

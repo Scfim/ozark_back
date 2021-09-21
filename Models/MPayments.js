@@ -13,6 +13,7 @@ const {
   userId,
   date,
   time,
+  receiptNumber
 } = payementsSchema;
 export default class Payments {
   static async insert(args, callback) {
@@ -30,8 +31,8 @@ export default class Payments {
           } else {
                 Queries.addData({
                     table: `${payement}`,
-                    fields: `${id},${referenceId},${dateRecord},${mount},${envoy},${exerciseId},${date},${time},${userId}`,
-                    values:`?,?,?,?,?,?,NOW(),NOW(),?`,
+                    fields: `${id},${referenceId},${dateRecord},${mount},${envoy},${exerciseId},${date},${time},${userId},${receiptNumber}`,
+                    values:`?,?,?,?,?,?,NOW(),NOW(),?,?`,
                     arguments:[
                         paymentId,
                         args.referenceId,
@@ -39,9 +40,10 @@ export default class Payments {
                         args.mount,
                         args.envoy,
                         args.exerciseId,
-                        args.userId
+                        args.userId,
+                        args.receiptNumber
                     ]
-                }).then((data) =>                                       
+                }).then(() =>                                       
                     callback({
                     type: "success",
                     message:"Enregistrement effectué"
@@ -56,61 +58,24 @@ export default class Payments {
           }
       })
   }
-  static async paymentHistory(args, callback) {
-    await Queries.getAll({
-      table: `${payement}`,
-      whereCloseFields: `${number}=?`,
-      arguments: [args.number],
-    })
-      .then((data) => {
-        callback({
-          type: "success",
-          data,
-        });
-      })
-      .catch((err) => {
-        callback({
-          type: "failure",
-          err,
-        });
+  
+      // GENERATE RECEIPT NUMBER
+static async receiptNumber(callback) {
+  await Queries.myQuery({
+    query: `SELECT count(*) as count FROM ${payement} where ${id}!=?`,
+    arguments: ["arg#$##$@#@#2s.id"],
+  })
+    .then((data) => {
+      callback({
+        type: "success",
+        data,
       });
-  }
-  static async paymentNote(args, callback) {
-    await Queries.getAll({
-      table: `${payement}`,
-      whereCloseFields: `${id}=?`,
-      arguments: [args.id],
     })
-      .then((data) => {
-        callback({
-          type: "success",
-          data,
-        });
-      })
-      .catch((err) => {
-        callback({
-          type: "failure",
-          err,
-        });
+    .catch((err) => {
+      callback({
+        type: "failure",
+        err,
       });
-  }
-  static async paymentJournal(args, callback) {
-    await Queries.getAll({
-      table: `${payement}`,
-      whereCloseFields: `${date}=?`,
-      arguments: [args.date],
-    })
-      .then((data) => {
-        callback({
-          type: "success",
-          data,
-        });
-      })
-      .catch((err) => {
-        callback({
-          type: "failure",
-          err,
-        });
-      });
-  }
+    });
+}
 }
